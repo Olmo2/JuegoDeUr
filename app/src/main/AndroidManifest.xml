@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JuegoDeUr">
-        <activity android:name="com.olmo.JuegoDeUr.MainActivity">
+        <activity android:name="com.olmo.JuegoDeUr.MainActivity"
+            android:screenOrientation="landscape"  >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

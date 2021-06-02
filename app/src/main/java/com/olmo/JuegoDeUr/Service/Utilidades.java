@@ -115,7 +115,7 @@ public class Utilidades {
 
     public Boolean evaluarDestino(Jugador j1, List<Casilla> recorrido1, List<Casilla> recorrido2, Integer tirada, Integer ficha) {
 
-        Ficha f = j1.getFichas().get(ficha);
+        Ficha f = j1.getFichas().get(ficha-1);
         Integer posicion = f.getPosicion();
         Integer destino = posicion + tirada;
         Boolean ocupantes = true, ocupantes2 = true;

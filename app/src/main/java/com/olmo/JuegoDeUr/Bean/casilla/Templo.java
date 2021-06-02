@@ -1,6 +1,6 @@
 package com.olmo.JuegoDeUr.Bean.casilla;
 
-import olmo.beans.Ficha;
+import com.olmo.JuegoDeUr.Bean.Ficha;
 
 import java.util.ArrayDeque;
 import java.util.Deque;

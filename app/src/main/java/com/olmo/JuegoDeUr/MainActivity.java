@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * DECLARACIONES
      */
+    private ThreadJuego thread;
     private Tablero tablero;
     private Turno turno;
     private Utilidades util;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         /** INICIALIZACIONES */
+        thread = new ThreadJuego();
         tableroView = findViewById(R.id.tableroView);
 
         textViewInfoA = findViewById(R.id.textViewInfoA);
@@ -101,52 +103,57 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textViewInfoA.setText("Empieza el juego");
         textViewInfoB.setText("Empieza el juego");
 
-        while (enCasaB != 7 && enCasaN != 7) {
-            textViewInfoA.setText("Negras en casa " + enCasaN);
-            textViewInfoB.setText("Blancas en casa " + enCasaB);
-            // System.out.println("Blancas en casa " + enCasaB + "Negras en casa " + enCasaN);
-            if (!juego(turno)) {
-                turno.setColor(!turno.getColor());
-            }
-            enCasaB = 0;
-            enCasaN = 0;
-            for (int i = 0; i < jB.getFichas().size(); i++) {
-                if (!jB.getFichas().get(i).getEnJuego()) {
-                    enCasaB++;
-                } else if (!jN.getFichas().get(i).getEnJuego()) {
-                    enCasaN++;
-                }
-            }
 
-        }
         // System.out.println("Fin del Juego");
         textViewInfoA.setText("Fin del Juego");
         textViewInfoB.setText("Fin del Juego");
+
+        thread.start();
+
     }
 
     public Boolean juego(Turno turno) {
 
         Boolean roseta = false;
-
-
-        texto(turno.getColor(),"Te toca Crack " + "Tira los dados");
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                texto(turno.getColor(),"Te toca Crack " + "Tira los dados");
+            }
+        });
         // System.out.println("Tira los dados");
         //   resp= sc.next()
         while (!dados){
 
         }
         //  tirada= this.util.tirarDados();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                texto(turno.getColor(),"Te ha salido un " + tirada);
+            }
+        });
 
-        texto(turno.getColor(),"Te ha salido un " + tirada);
         //   System.out.println("Te ha salido un " + tirada);
         if (tirada == 0) {
-            texto(turno.getColor(),"Pierdes turno pringao");
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    texto(turno.getColor(),"Pierdes turno pringao");
+                }
+            });
+
             //System.err.println("Pierdes turno pringao");
         } else {
 
             if (turno.getColor()) {
                 do {
-                  /*Aqui tamos*/  texto(turno.getColor(),"Elige Ficha 1-7");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            texto(turno.getColor(),"Elige Ficha 1-7");
+                        }
+                    });
                     while (!ficha){
 
                     }
@@ -161,7 +168,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else {
 
                 do {
-                    texto(turno.getColor(),"Elige Ficha 1-7");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            texto(turno.getColor(),"Elige Ficha 1-7");
+                        }
+                    });
+
                     while (!ficha){
 
                     }
@@ -174,16 +187,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         tablero.getRecorridoBlanco());
             }
             //System.out.println("******* B L A N C O *******");
-            for (int i = 0; i < jB.getFichas().size(); i++) {
-                textViewInfoA.append(jB.getFichas().get(i).toString());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (int i = 0; i < jB.getFichas().size(); i++) {
+                            textViewInfoA.append(jB.getFichas().get(i).toString());
+                        }
+                    }
+                });
+
                 //System.out.println(jB.getFichas().get(i));
-            }
+
 
            // System.out.println("******* N E G R O *******");
-            for (int i = 0; i < jN.getFichas().size(); i++) {
-                textViewInfoB.append(jN.getFichas().get(i).toString());
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (int i = 0; i < jN.getFichas().size(); i++) {
+                            textViewInfoB.append(jN.getFichas().get(i).toString());
+                        }
+                    }
+                });
+
                 //System.out.println(jN.getFichas().get(i));
-            }
+
         }
 
         return roseta;
@@ -324,6 +352,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 ficha =false;
                 break;
+        }
+    }
+
+
+    class ThreadJuego extends Thread{
+        @Override
+        public void run(){
+
+            while (enCasaB != 7 && enCasaN != 7) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        textViewInfoA.setText("Negras en casa " + enCasaN);
+                        textViewInfoB.setText("Blancas en casa " + enCasaB);
+                    }
+                });
+                // System.out.println("Blancas en casa " + enCasaB + "Negras en casa " + enCasaN);
+                if (!juego(turno)) {
+                    turno.setColor(!turno.getColor());
+                }
+                enCasaB = 0;
+                enCasaN = 0;
+                for (int i = 0; i < jB.getFichas().size(); i++) {
+                    if (!jB.getFichas().get(i).getEnJuego()) {
+                        enCasaB++;
+                    } else if (!jN.getFichas().get(i).getEnJuego()) {
+                        enCasaN++;
+                    }
+                }
+
+            }
         }
     }
 }

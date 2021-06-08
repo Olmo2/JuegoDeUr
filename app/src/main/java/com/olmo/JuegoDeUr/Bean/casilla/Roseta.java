@@ -11,8 +11,8 @@ public class Roseta extends Casilla {
         setTipo(1);
     }
 
-    public Roseta(Integer posicion, List<Ficha> ocupantes) {
-        super(posicion, ocupantes);
+    public Roseta(Integer posicion, List<Ficha> ocupantes, int[] coordenadas) {
+        super(posicion, ocupantes,coordenadas);
         setTipo(1);
     }
 

@@ -11,8 +11,8 @@ public class Casa extends Casilla {
         setTipo(2);
     }
 
-    public Casa(Integer posicion, List<Ficha> ocupantes) {
-        super(posicion, ocupantes);
+    public Casa(Integer posicion, List<Ficha> ocupantes,int[] coordenadas) {
+        super(posicion, ocupantes,coordenadas);
         setTipo(2);
     }
 }

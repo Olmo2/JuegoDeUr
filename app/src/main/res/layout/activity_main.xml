@@ -17,7 +17,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Button" />
+            android:text="ButtonNegro" />
 
         <TextView
             android:id="@+id/textViewInfoA"
@@ -98,17 +98,19 @@
         android:id="@+id/tableroView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4">
+        android:layout_weight="4.20"
+        android:background="@drawable/tablero">
 
         <ImageView
-            android:id="@+id/ficha1A"
+            android:id="@+id/ficha1B"
             android:layout_width="46dp"
             android:layout_height="36dp"
+            android:layout_marginTop="228dp"
             android:layout_marginEnd="312dp"
-            android:layout_marginBottom="48dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/ic_notification_overlay" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
@@ -121,7 +123,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Button" />
+            android:text="ButtonBlanco" />
 
         <TextView
             android:id="@+id/textViewInfoB"

@@ -15,10 +15,12 @@ public class Casilla {
      * Tipo 5-> Tesoro
      * Tipo 6-> Salida*/
     private Integer tipo;
+    private int[] coordenadas =new int[2];
 
-    public Casilla(Integer posicion, List<Ficha> ocupantes) {
+    public Casilla(Integer posicion, List<Ficha> ocupantes,int[] coordenadas) {
         this.posicion = posicion;
         this.ocupantes = ocupantes;
+        this.coordenadas = coordenadas;
 
     }
 
@@ -50,6 +52,14 @@ public class Casilla {
 
     public void setTipo(Integer tipo) {
         this.tipo = tipo;
+    }
+
+    public int[] getCoordenadas() {
+        return coordenadas;
+    }
+
+    public void setCoordenadas(int[] coordenadas) {
+        this.coordenadas = coordenadas;
     }
 
     @Override

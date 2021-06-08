@@ -1,6 +1,11 @@
 package com.olmo.JuegoDeUr.Service;
 
 
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
+
 import com.olmo.JuegoDeUr.Bean.Ficha;
 import com.olmo.JuegoDeUr.Bean.Jugador;
 import com.olmo.JuegoDeUr.Bean.casilla.Casa;
@@ -40,8 +45,14 @@ public class Utilidades {
         Ficha f;
         List<Ficha> listaFichas = new ArrayList<>();
 
+        if(color){
+            for (int i = 0; i < 7; i++) {
+                f = new Ficha(false, 0, true, color, new int[] {4,3});
+                listaFichas.add(f);
+            }
+        }else
         for (int i = 0; i < 7; i++) {
-            f = new Ficha(false, 0, true, color);
+            f = new Ficha(false, 0, true, color, new int[] {0,0});
             listaFichas.add(f);
         }
 
@@ -57,54 +68,107 @@ public class Utilidades {
              * Recorrido sencillo 1-3 Casa
              *  4,8,14 Roseta
              *  4-6, 8-12 Casa
+             *  case 1 blanco
+             *  case 2 negro
              */
             case 1:
-                c = new Casilla(0, lista = new ArrayList<>());
+                c = new Casilla(0, lista = new ArrayList<>(), new int[]{4, 3});
                 listaCasillas.add(c);
 
-                c = new Casa(1, lista = new ArrayList<>());
+                c = new Casa(1, lista = new ArrayList<>(),new int[]{3, 3});
                 listaCasillas.add(c);
 
-                c = new Casa(2, lista = new ArrayList<>());
+                c = new Casa(2, lista = new ArrayList<>(),new int[]{2, 3});
                 listaCasillas.add(c);
 
-                c = new Casa(3, lista = new ArrayList<>());
-                listaCasillas.add(c);
-
-                /* ROSETA */
-                c = new Roseta(4, lista = new ArrayList<>());
-                listaCasillas.add(c);
-
-                c = new Casa(5, lista = new ArrayList<>());
-                listaCasillas.add(c);
-
-                c = new Casa(6, lista = new ArrayList<>());
-                listaCasillas.add(c);
-
-                c = new Casa(7, lista = new ArrayList<>());
+                c = new Casa(3, lista = new ArrayList<>(),new int[]{1, 3});
                 listaCasillas.add(c);
 
                 /* ROSETA */
-                c = new Roseta(8, lista = new ArrayList<>());
+                c = new Roseta(4, lista = new ArrayList<>(),new int[]{0, 3});
                 listaCasillas.add(c);
 
-                c = new Casa(9, lista = new ArrayList<>());
+                c = new Casa(5, lista = new ArrayList<>(),new int[]{0,2});
                 listaCasillas.add(c);
 
-                c = new Casa(10, lista = new ArrayList<>());
+                c = new Casa(6, lista = new ArrayList<>(),new int[]{1, 2});
                 listaCasillas.add(c);
 
-                c = new Casa(11, lista = new ArrayList<>());
-                listaCasillas.add(c);
-
-                c = new Casa(12, lista = new ArrayList<>());
-                listaCasillas.add(c);
-
-                c = new Casa(13, lista = new ArrayList<>());
+                c = new Casa(7, lista = new ArrayList<>(),new int[]{2, 2});
                 listaCasillas.add(c);
 
                 /* ROSETA */
-                c = new Roseta(14, lista = new ArrayList<>());
+                c = new Roseta(8, lista = new ArrayList<>(),new int[]{3, 2});
+                listaCasillas.add(c);
+
+                c = new Casa(9, lista = new ArrayList<>(),new int[]{4,2});
+                listaCasillas.add(c);
+
+                c = new Casa(10, lista = new ArrayList<>(),new int[]{5,2});
+                listaCasillas.add(c);
+
+                c = new Casa(11, lista = new ArrayList<>(),new int[]{6,2});
+                listaCasillas.add(c);
+
+                c = new Casa(12, lista = new ArrayList<>(),new int[]{7,2});
+                listaCasillas.add(c);
+
+                c = new Casa(13, lista = new ArrayList<>(),new int[]{7,3});
+                listaCasillas.add(c);
+
+                /* ROSETA */
+                c = new Roseta(14, lista = new ArrayList<>(),new int[]{6,3});
+                listaCasillas.add(c);
+
+                break;
+
+            case 2:
+                c = new Casilla(0, lista = new ArrayList<>(), new int[]{0, 0});
+                listaCasillas.add(c);
+
+                c = new Casa(1, lista = new ArrayList<>(),new int[]{3, 0});
+                listaCasillas.add(c);
+
+                c = new Casa(2, lista = new ArrayList<>(),new int[]{2, 0});
+                listaCasillas.add(c);
+
+                c = new Casa(3, lista = new ArrayList<>(),new int[]{1, 0});
+                listaCasillas.add(c);
+
+                /* ROSETA */
+                c = new Roseta(4, lista = new ArrayList<>(),new int[]{0, 0});
+                listaCasillas.add(c);
+
+                c = new Casa(5, lista = new ArrayList<>(),new int[]{0,2});
+                listaCasillas.add(c);
+
+                c = new Casa(6, lista = new ArrayList<>(),new int[]{1, 2});
+                listaCasillas.add(c);
+
+                c = new Casa(7, lista = new ArrayList<>(),new int[]{2, 2});
+                listaCasillas.add(c);
+
+                /* ROSETA */
+                c = new Roseta(8, lista = new ArrayList<>(),new int[]{3, 2});
+                listaCasillas.add(c);
+
+                c = new Casa(9, lista = new ArrayList<>(),new int[]{4,2});
+                listaCasillas.add(c);
+
+                c = new Casa(10, lista = new ArrayList<>(),new int[]{5,2});
+                listaCasillas.add(c);
+
+                c = new Casa(11, lista = new ArrayList<>(),new int[]{6,2});
+                listaCasillas.add(c);
+
+                c = new Casa(12, lista = new ArrayList<>(),new int[]{7,2});
+                listaCasillas.add(c);
+
+                c = new Casa(13, lista = new ArrayList<>(),new int[]{7,0});
+                listaCasillas.add(c);
+
+                /* ROSETA */
+                c = new Roseta(14, lista = new ArrayList<>(),new int[]{6,0});
                 listaCasillas.add(c);
 
                 break;
@@ -128,6 +192,7 @@ public class Utilidades {
             System.out.println("Ficha en casa");
             recorrido1.get(f.getPosicion()).getOcupantes().remove(recorrido1.get(f.getPosicion()).getOcupantes().size() - 1);
             f.setPosicion(destino);
+
             return true;
 
         } else {
@@ -216,6 +281,7 @@ public class Utilidades {
                     f.setPosicion(destino);
                     recorrido1.get(f.getPosicion()).getOcupantes().add(f);
                 }
+
             }
 
         }
@@ -231,5 +297,17 @@ public class Utilidades {
                 System.out.println("Pa tu casa neno");
             }
         }
+    }
+
+    public void posicionarFicha(ImageView ficha, int[] dimensionesTablero,Ficha f,int x ,int y){
+        int x0=f.getCoordenadas()[0];
+        int y0=f.getCoordenadas()[1];
+        int yf=y-y0;
+        int xf=x-x0;
+        Animation anim= new TranslateAnimation(x0, (dimensionesTablero[0]/8)*xf, y0, (dimensionesTablero[1]/3)*yf);
+        anim.setDuration(1000);
+        anim.setFillAfter(true);
+        ficha.startAnimation(anim);
+        f.setCoordenadas(new int[] {xf,yf});
     }
 }

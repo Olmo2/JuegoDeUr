@@ -12,8 +12,8 @@ public class Mercado extends Casilla {
     private Deque<Ficha> fichas;
 
 
-    public Mercado(Integer posicion, List<Ficha> ocupantes) {
-        super(posicion, ocupantes);
+    public Mercado(Integer posicion, List<Ficha> ocupantes,int[] coordenadas) {
+        super(posicion, ocupantes,coordenadas);
         fichas= new ArrayDeque<>(4);
         setTipo(4);
     }

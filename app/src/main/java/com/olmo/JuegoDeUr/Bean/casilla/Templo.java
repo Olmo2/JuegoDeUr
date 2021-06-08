@@ -15,8 +15,8 @@ public class Templo extends Casilla {
     * 2 -> Negro*/
     private Integer color;
 
-    public Templo(Integer posicion, List<Ficha> ocupantes) {
-        super(posicion, ocupantes);
+    public Templo(Integer posicion, List<Ficha> ocupantes,int[] coordenadas) {
+        super(posicion, ocupantes,coordenadas);
         fichas=new ArrayDeque<>(4);
         color= 0;
         setTipo(3);

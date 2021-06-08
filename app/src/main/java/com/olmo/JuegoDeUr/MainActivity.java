@@ -1,9 +1,13 @@
 package com.olmo.JuegoDeUr;
 
 import android.content.pm.ActivityInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +22,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * DECLARACIONES
      */
+    private final Integer DADOS=0;
+    private final Integer TIRADA = 1;
     private ThreadJuego thread;
     private Tablero tablero;
     private Turno turno;
@@ -36,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button button1A,button2A,button3A,button4A,button5A,button6A,button7A;
     /**Botones Blanco*/
     private Button button1B,button2B,button3B,button4B,button5B,button6B,button7B;
+    private ImageView ficha1B,fichaMover;
 
     private TextView textViewInfoA, textViewInfoB;
     private boolean dados,ficha;
@@ -75,9 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button5B = findViewById(R.id.button5B); button5B.setOnClickListener(this);
         button6B = findViewById(R.id.button6B); button6B.setOnClickListener(this);
         button7B = findViewById(R.id.button7B); button7B.setOnClickListener(this);
-
-        dimensionesTablero[0] = tableroView.getMaxWidth();
-        dimensionesTablero[1] = tableroView.getMaxHeight();
+        ficha1B = findViewById(R.id.ficha1B); ficha1B.setOnClickListener(this);
 
         tablero = new Tablero();
         util = new Utilidades();
@@ -86,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         turno = new Turno(0, false);
         enCasaB = enCasaN = 0;
         tirada = fich = 0;
-        dados = false;
+        dados =ficha= false;
 
         tablero.setRecorridoBlanco(util.generarRecorrido(1));
         tablero.setRecorridoNegro(util.generarRecorrido(1));
@@ -104,17 +109,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textViewInfoB.setText("Empieza el juego");
 
 
-        // System.out.println("Fin del Juego");
+
+
+
         textViewInfoA.setText("Fin del Juego");
         textViewInfoB.setText("Fin del Juego");
 
-        thread.start();
 
+    thread.start();
     }
 
-    public Boolean juego(Turno turno) {
-
+    /**
+     * @param turno Booleano con el color del jugador del turno
+     * @return Integer */
+    public Boolean juego(Turno turno){
+        dimensionesTablero[0] = tableroView.getWidth();
+        dimensionesTablero[1] = tableroView.getHeight();
+        System.out.println("Ancho: " + dimensionesTablero[0]);
+        System.out.println("alto: " + dimensionesTablero[1]);
         Boolean roseta = false;
+        do{
+            try {
+                thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        while (!dados);
+        dados=false;
+        ficha=false;
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -123,16 +146,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
         // System.out.println("Tira los dados");
         //   resp= sc.next()
-        while (!dados){
-
-        }
-        //  tirada= this.util.tirarDados();
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                texto(turno.getColor(),"Te ha salido un " + tirada);
+        do{
+            try {
+                thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        });
+        }
+        while (!dados);
+        dados=false;
+        ficha=false;
+         tirada= this.util.tirarDados();
+
+        //Estado  tirada AKA 0
 
         //   System.out.println("Te ha salido un " + tirada);
         if (tirada == 0) {
@@ -151,19 +177,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            texto(turno.getColor(),"Elige Ficha 1-7");
+                            texto(turno.getColor(),"Te ha salido un " + tirada + " Elige una ficha");
                         }
                     });
-                    while (!ficha){
-
+                    do{
+                        try {
+                            thread.sleep(50);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
+                    while (!ficha);
+                    dados=false;
+                    ficha=false;
                   //  System.out.println("Elige Ficha 0-6");
                     //  fich = sc.nextInt();
                 } while (!util.evaluarDestino(jB, tablero.getRecorridoBlanco(), tablero.getRecorridoNegro(), tirada,
                         fich));
 
-                roseta = util.moverFicha(jB, jN, fich, tirada, tablero.getRecorridoBlanco(),
+                roseta = util.moverFicha(jB, jN, fich-1, tirada, tablero.getRecorridoBlanco(),
                         tablero.getRecorridoNegro());
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        util.posicionarFicha(fichaMover,dimensionesTablero,
+                                jB.getFichas().get(fich-1),
+                                tablero.getRecorridoBlanco().get(jB.getFichas().get(fich-1).getPosicion()).getCoordenadas()[0],
+                                tablero.getRecorridoBlanco().get(jB.getFichas().get(fich-1).getPosicion()).getCoordenadas()[1]);
+                    }
+                });
 
             } else {
 
@@ -171,27 +214,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            texto(turno.getColor(),"Elige Ficha 1-7");
+                            texto(turno.getColor(),"Te ha salido un " + tirada + " Elige una ficha");
                         }
                     });
 
-                    while (!ficha){
-
+                    do{
+                        try {
+                            thread.sleep(50);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
+                    while (!ficha);
+                    dados=false;
+                    ficha=false;
                     //System.out.println("Elige Ficha 0-6");
                     //  fich = sc.nextInt();
                 } while (!util.evaluarDestino(jN, tablero.getRecorridoNegro(), tablero.getRecorridoBlanco(), tirada,
                         fich));
 
-                roseta = util.moverFicha(jN, jB, fich, tirada, tablero.getRecorridoNegro(),
+                roseta = util.moverFicha(jN, jB, fich-1, tirada, tablero.getRecorridoNegro(),
                         tablero.getRecorridoBlanco());
+
+
             }
-            //System.out.println("******* B L A N C O *******");
+
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        System.out.println("******* B L A N C O *******");
+
+                        textViewInfoB.setText("B L A N C O");
                         for (int i = 0; i < jB.getFichas().size(); i++) {
-                            textViewInfoA.append(jB.getFichas().get(i).toString());
+                            System.out.println(jB.getFichas().get(i));
+                            textViewInfoB.append(jB.getFichas().get(i).toString());
                         }
                     }
                 });
@@ -199,13 +256,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //System.out.println(jB.getFichas().get(i));
 
 
-           // System.out.println("******* N E G R O *******");
+
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        System.out.println("******* N E G R O *******");
+                        textViewInfoA.setText("NEGRO");
                         for (int i = 0; i < jN.getFichas().size(); i++) {
-                            textViewInfoB.append(jN.getFichas().get(i).toString());
+                            System.out.println(jN.getFichas().get(i));
+                            textViewInfoA.append(jN.getFichas().get(i).toString());
                         }
                     }
                 });
@@ -214,6 +274,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
 
+        do{
+            try {
+                thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        while (!dados);
+        dados=false;
+        ficha=false;
         return roseta;
         /* Compro */
     }
@@ -239,7 +309,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (!turno.getColor()) {
                     tirada = this.util.tirarDados();
                     dados = true;
-                }
+                }else
                 dados=false;
                 break;
 
@@ -247,7 +317,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (turno.getColor()) {
                     tirada = this.util.tirarDados();
                     dados = true;
-                }
+                }else
                 dados=false;
                 break;
 
@@ -256,49 +326,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (!turno.getColor()) {
                     fich = 1;
                     ficha = true;
-                }
+                }else
                 ficha=false;
                 break;
             case (R.id.button2A):
                 if (!turno.getColor()) {
                     fich = 2;
                     ficha = true;
-                }
+                }else
                 ficha =false;
                 break;
             case (R.id.button3A):
                 if (!turno.getColor()) {
                     fich = 3;
                     ficha = true;
-                }
+                }else
                 ficha =false;
                 break;
             case (R.id.button4A):
                 if (!turno.getColor()) {
                     fich = 4;
                     ficha = true;
-                }
+                }else
                 ficha =false;
                 break;
             case (R.id.button5A):
                 if (!turno.getColor()) {
                     fich = 5;
                     ficha = true;
-                }
+                }else
                 ficha =false;
                 break;
             case (R.id.button6A):
                 if (!turno.getColor()) {
                     fich = 6;
                     ficha = true;
-                }
+                }else
                 ficha =false;
                 break;
             case (R.id.button7A):
                 if (!turno.getColor()) {
                     fich = 7;
                     ficha = true;
-                }
+                }else
                 ficha =false;
                 break;
 
@@ -307,59 +377,68 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (turno.getColor()) {
                     fich = 1;
                     ficha = true;
-                }
+                }else
                 ficha =false;
                 break;
             case (R.id.button2B):
                 if (turno.getColor()) {
                     fich = 2;
                     ficha = true;
-                }
+                }else
                 ficha =false;
                 break;
             case (R.id.button3B):
                 if (turno.getColor()) {
                     fich = 3;
                     ficha = true;
-                }
+                }else
                 ficha =false;
                 break;
             case (R.id.button4B):
                 if (turno.getColor()) {
                     fich = 4;
                     ficha = true;
-                }
+                }else
                 ficha =false;
                 break;
             case (R.id.button5B):
                 if (turno.getColor()) {
                     fich = 5;
                     ficha = true;
-                }
+                }else
                 ficha =false;
                 break;
             case (R.id.button6B):
                 if (turno.getColor()) {
                     fich = 6;
                     ficha = true;
-                }
+                }else
                 ficha =false;
                 break;
             case (R.id.button7B):
                 if (turno.getColor()) {
                     fich = 7;
                     ficha = true;
-                }
+                }else
                 ficha =false;
+                break;
+            case (R.id.ficha1B):
+                if (turno.getColor()) {
+                    fich = 1;
+                    fichaMover=ficha1B;
+                    ficha = true;
+                }else
+                    ficha =false;
                 break;
         }
     }
 
 
     class ThreadJuego extends Thread{
-        @Override
-        public void run(){
 
+
+        @Override
+        public void run() {
             while (enCasaB != 7 && enCasaN != 7) {
                 runOnUiThread(new Runnable() {
                     @Override

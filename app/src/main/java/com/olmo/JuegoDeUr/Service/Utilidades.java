@@ -308,6 +308,6 @@ public class Utilidades {
         anim.setDuration(1000);
         anim.setFillAfter(true);
         ficha.startAnimation(anim);
-        f.setCoordenadas(new int[] {xf,yf});
+        f.setCoordenadas(new int[] {x,y});
     }
 }

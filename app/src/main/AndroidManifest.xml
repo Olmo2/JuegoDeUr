@@ -9,8 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JuegoDeUr">
-        <activity android:name=".MainActivity"
-            android:screenOrientation="landscape"></activity>
+        <activity android:name=".PartidasActivity"></activity>
+        <activity
+            android:name=".JuegoActivity"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".MenuPrincipal"
             android:screenOrientation="landscape">

@@ -1,11 +1,7 @@
 package com.olmo.JuegoDeUr;
 
-import android.content.pm.ActivityInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,7 +14,7 @@ import com.olmo.JuegoDeUr.Bean.Tablero;
 import com.olmo.JuegoDeUr.Bean.Turno;
 import com.olmo.JuegoDeUr.Service.Utilidades;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class JuegoActivity extends AppCompatActivity implements View.OnClickListener {
     /**
      * DECLARACIONES
      */
@@ -51,15 +47,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_juego);
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         /** INICIALIZACIONES */
         thread = new ThreadJuego();
         tableroView = findViewById(R.id.tableroView);
 
-        textViewInfoA = findViewById(R.id.textViewInfoA);
-        textViewInfoB = findViewById(R.id.textViewInfoB);
+        textViewInfoA = findViewById(R.id.textViewInfoNegro);
+        textViewInfoB = findViewById(R.id.textViewInfoBlanco);
 
         buttonDadosA = findViewById(R.id.buttonDadosA);
         buttonDadosA.setOnClickListener(this);

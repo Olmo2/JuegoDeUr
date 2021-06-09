@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".JuegoActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:text="ButtonNegro" />
 
         <TextView
-            android:id="@+id/textViewInfoA"
+            android:id="@+id/textViewInfoNegro"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.66"
@@ -105,10 +105,10 @@
             android:id="@+id/ficha1B"
             android:layout_width="46dp"
             android:layout_height="36dp"
-            android:layout_marginTop="228dp"
             android:layout_marginEnd="312dp"
+            android:layout_marginBottom="36dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/ic_notification_overlay" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -126,7 +126,7 @@
             android:text="ButtonBlanco" />
 
         <TextView
-            android:id="@+id/textViewInfoB"
+            android:id="@+id/textViewInfoBlanco"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.66"

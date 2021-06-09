@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">JuegoDeUr</string>
+    <string name="jugar">Jugar</string>
+    <string name="preferencias">Menú de Preferencias</string>
+    <string name="partidas">Menú de Partidas</string>
+    <string name="salir">Salir del Juego</string>
+    <string name="lista">Lista de Partidas</string>
+    <string name="vs">Vs</string>
 </resources>

@@ -53,20 +53,140 @@
 
         <ImageView
             android:id="@+id/ficha1B"
-            android:layout_width="46dp"
-            android:layout_height="36dp"
-            android:layout_marginEnd="300dp"
-            android:layout_marginBottom="36dp"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginEnd="316dp"
+            android:layout_marginBottom="48dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/white" />
+
+        <ImageView
+            android:id="@+id/ficha3B"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginEnd="244dp"
+            android:layout_marginBottom="48dp"
+            app:layout_constraintBottom_toBottomOf="@+id/ficha7B"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/white" />
+
+        <ImageView
+            android:id="@+id/ficha4B"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginEnd="208dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/white" />
+
+        <ImageView
+            android:id="@+id/ficha6B"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginEnd="280dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/white" />
+
+        <ImageView
+            android:id="@+id/ficha5B"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginEnd="316dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/white" />
+
+        <ImageView
+            android:id="@+id/ficha7B"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginEnd="244dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/white" />
+
+        <ImageView
+            android:id="@+id/ficha2B"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginEnd="280dp"
+            android:layout_marginBottom="48dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/white" />
 
         <ImageView
             android:id="@+id/ficha1N"
-            android:layout_width="46dp"
-            android:layout_height="36dp"
-            android:layout_marginTop="36dp"
-            android:layout_marginEnd="300dp"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="324dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/black" />
+
+        <ImageView
+            android:id="@+id/ficha2N"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="288dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/black" />
+
+        <ImageView
+            android:id="@+id/ficha3N"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="252dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/black" />
+
+        <ImageView
+            android:id="@+id/ficha4N"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="216dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/black" />
+
+        <ImageView
+            android:id="@+id/ficha5N"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="324dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/black" />
+
+        <ImageView
+            android:id="@+id/ficha6N"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="288dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/black" />
+
+        <ImageView
+            android:id="@+id/ficha7N"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="252dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/black" />

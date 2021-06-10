@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/buttonPausa"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -12,12 +13,12 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <Button
-            android:id="@+id/buttonDadosA"
+        <ImageView
+            android:id="@+id/dadosNegro"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="ButtonNegro" />
+            android:layout_height="wrap_content"
+            android:layout_weight="0.33"
+            app:srcCompat="@drawable/dices" />
 
         <TextView
             android:id="@+id/textViewInfoNegro"
@@ -26,72 +27,21 @@
             android:layout_weight="0.66"
             android:text="TextView" />
 
-        <TableLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0.4">
+        <TextView
+            android:id="@+id/textViewFichasNegro"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.33"
+            android:text="TextView" />
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        <Button
+            android:id="@+id/button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.17"
+            android:background="@drawable/pause"
+            app:backgroundTint="@color/black" />
 
-                <Button
-                    android:id="@+id/button1A"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:text="1"
-                    android:textSize="14sp" />
-
-                <Button
-                    android:id="@+id/button2A"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:text="2" />
-
-                <Button
-                    android:id="@+id/button3A"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:text="3" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <Button
-                    android:id="@+id/button4A"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:text="4" />
-
-                <Button
-                    android:id="@+id/button5A"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:text="5" />
-
-                <Button
-                    android:id="@+id/button6A"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:text="6" />
-
-                <Button
-                    android:id="@+id/button7A"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:text="7" />
-            </TableRow>
-
-        </TableLayout>
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -99,17 +49,147 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="4.20"
-        android:background="@drawable/tablero">
+        android:background="@drawable/board">
 
         <ImageView
             android:id="@+id/ficha1B"
-            android:layout_width="46dp"
-            android:layout_height="36dp"
-            android:layout_marginEnd="312dp"
-            android:layout_marginBottom="36dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="196dp"
+            android:layout_marginEnd="316dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@android:drawable/ic_notification_overlay" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/white" />
+
+        <ImageView
+            android:id="@+id/ficha2B"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="196dp"
+            android:layout_marginEnd="280dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/white" />
+
+        <ImageView
+            android:id="@+id/ficha3B"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="196dp"
+            android:layout_marginEnd="244dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/white" />
+
+        <ImageView
+            android:id="@+id/ficha4B"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="196dp"
+            android:layout_marginEnd="208dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/white" />
+
+        <ImageView
+            android:id="@+id/ficha5B"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="240dp"
+            android:layout_marginEnd="316dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/white" />
+
+        <ImageView
+            android:id="@+id/ficha7B"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="240dp"
+            android:layout_marginEnd="244dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/white" />
+
+        <ImageView
+            android:id="@+id/ficha6B"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="240dp"
+            android:layout_marginEnd="280dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/white" />
+
+        <ImageView
+            android:id="@+id/ficha1N"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="324dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/black" />
+
+        <ImageView
+            android:id="@+id/ficha2N"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="288dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/black" />
+
+        <ImageView
+            android:id="@+id/ficha3N"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="252dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/black" />
+
+        <ImageView
+            android:id="@+id/ficha4N"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="216dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/black" />
+
+        <ImageView
+            android:id="@+id/ficha5N"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="324dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/black" />
+
+        <ImageView
+            android:id="@+id/ficha6N"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="288dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/black" />
+
+        <ImageView
+            android:id="@+id/ficha7N"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="252dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/black" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -118,12 +198,12 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <Button
-            android:id="@+id/buttonDadosB"
+        <ImageView
+            android:id="@+id/dadosBlanco"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="ButtonBlanco" />
+            android:layout_height="wrap_content"
+            android:layout_weight="0.33"
+            app:srcCompat="@drawable/dices" />
 
         <TextView
             android:id="@+id/textViewInfoBlanco"
@@ -132,71 +212,17 @@
             android:layout_weight="0.66"
             android:text="TextView" />
 
-        <TableLayout
+        <TextView
+            android:id="@+id/textViewFichasBlanco"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.4">
+            android:layout_height="wrap_content"
+            android:layout_weight="0.33"
+            android:text="TextView" />
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <Button
-                    android:id="@+id/button1B"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:text="1" />
-
-                <Button
-                    android:id="@+id/button2B"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:text="2" />
-
-                <Button
-                    android:id="@+id/button3B"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:text="3" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <Button
-                    android:id="@+id/button4B"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:text="4" />
-
-                <Button
-                    android:id="@+id/button5B"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:text="5" />
-
-                <Button
-                    android:id="@+id/button6B"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:text="6" />
-
-                <Button
-                    android:id="@+id/button7B"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:text="7" />
-            </TableRow>
-
-        </TableLayout>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.17" />
 
     </LinearLayout>
-    </LinearLayout>
+</LinearLayout>

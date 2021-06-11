@@ -19,6 +19,9 @@ import java.util.Random;
 
 public class Utilidades {
 
+    public boolean comida=false;
+    public Ficha fichaComida;
+
     public Integer tirarDados() {
         Integer n;
         Integer resul = 0;
@@ -39,7 +42,7 @@ public class Utilidades {
             }
         }
 
-        return resul;
+        return 4;
     }
 
     public List<Ficha> generarFichas(Boolean color) {
@@ -202,15 +205,15 @@ public class Utilidades {
         }
 
         if (!ocupantes) {
-            /*ocupada, devuelve fasle*/
-            System.out.println("Esta ocupada, eres un terrorista");
+            /**Ocupada, devuelve fasle*/
+            System.out.println("Esta ocupada");
             System.out.println("Elige otra anda");
             return ocupantes;
         } else if (!ocupantes2 && recorrido2.get(destino).getTipo() == 1) {
-            System.out.println("Roseta Ocupada, eres un terrorista");
+            System.out.println("Roseta Ocupada");
             return ocupantes2;
         }
-        /*libre devuelve true*/
+        /**Libre devuelve true*/
         return ocupantes;
 
     }
@@ -233,7 +236,7 @@ public class Utilidades {
 
 
         if (destino < 15) {
-            /*ocupantes del destino del mismo color*/
+            /**ocupantes del destino del mismo color*/
             //Integer ocupantes = recorrido1.get(destino).getOcupantes().size();
             ocupantes = recorrido1.get(destino).getOcupantes().isEmpty();
             ocupantes2 = recorrido2.get(destino).getOcupantes().isEmpty();
@@ -241,13 +244,13 @@ public class Utilidades {
 
 
             if (!ocupantes) {
-                System.out.println("Esta ocupada, eres un terrorista");
+                System.out.println("Esta ocupada");
                 System.out.println("Elige otra anda");
 
             } else if (destino > 4 && destino < 12 && !ocupantes2) {
 
                 comerFicha(destino, j2.getFichas(), recorrido2);
-
+                comida=true;
                 System.out.println("La ficha se vuelve a mover");
                 if (posicion == 0) {
                     System.out.println("La ficha entra en el tablero");
@@ -263,7 +266,7 @@ public class Utilidades {
 
 
             } else if (ocupantes) {
-                /*movimiento normal*/
+                /**Movimiento normal*/
 
                 if (recorrido1.get(destino).getTipo() == 1) {
                     roseta = true;
@@ -290,10 +293,11 @@ public class Utilidades {
 
     }
 
-    public void comerFicha(Integer destino, List<Ficha> lista, List<Casilla> listaCasillas) {
-        for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i).getPosicion() == destino) {
-                lista.get(i).setPosicion(0);
+    public void comerFicha(Integer destino, List<Ficha> listaFichas, List<Casilla> listaCasillas) {
+        for (int i = 0; i < listaFichas.size(); i++) {
+            if (listaFichas.get(i).getPosicion() == destino) {
+                listaFichas.get(i).setPosicion(0);
+                fichaComida=listaFichas.get(i);
                 listaCasillas.get(destino).getOcupantes().remove(listaCasillas.get(destino).getOcupantes().size() - 1);
                 System.out.println("Pa tu casa neno");
             }
@@ -307,11 +311,11 @@ public class Utilidades {
         int xf=x-x0;
         // la propiedad "x" hace q se mueva de izquierda a derecha, puede ser
         // en positivo o negativo (de derecha a izquierda)
-        ObjectAnimator object1=ObjectAnimator.ofFloat(ficha,"x", (dimensionesTablero[0]/8)*(x));
+        ObjectAnimator object1=ObjectAnimator.ofFloat(ficha,"x", (dimensionesTablero[0]/8)*(x+0.25f));
         object1.setDuration(1000);
         object1.start();
         // la propiedad "y" hace q se mueva desde el top hasta donde está posicionada
-        object1=ObjectAnimator.ofFloat(ficha,"y",(dimensionesTablero[1]/3)*(y));
+        object1=ObjectAnimator.ofFloat(ficha,"y",(dimensionesTablero[1]/3)*(y+0.25f));
         object1.setDuration(1000);
         object1.start();
        /* Animation anim= new TranslateAnimation(x0, (dimensionesTablero[0]/8)*xf, y0, (dimensionesTablero[1]/3)*yf);

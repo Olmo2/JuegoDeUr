@@ -6,9 +6,10 @@ public class Ficha {
 
     private Boolean promocionada;
     private Integer posicion;
+
     /**
      * True -> en el tablero
-     * False -> en casa AKA salvadas(?
+     * False -> en casa
      */
     private Boolean enJuego;
     /**
@@ -16,8 +17,10 @@ public class Ficha {
      * False -> Negro
      */
     private Boolean color;
+
     private Image sprite;
     private int[] coordenadas = new int[2];
+    private float[] coordenadasIniciales = new float[2];
 
     public Ficha() {
 
@@ -78,6 +81,10 @@ public class Ficha {
     public void setCoordenadas(int[] coordenadas) {
         this.coordenadas = coordenadas;
     }
+
+    public float[] getCoordenadasIniciales() { return coordenadasIniciales; }
+
+    public void setCoordenadasIniciales(float[] coordenadasIniciales) {this.coordenadasIniciales = coordenadasIniciales; }
 
     @Override
     public String toString() {

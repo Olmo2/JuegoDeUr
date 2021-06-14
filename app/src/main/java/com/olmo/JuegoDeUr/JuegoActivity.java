@@ -2,6 +2,7 @@ package com.olmo.JuegoDeUr;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -9,10 +10,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.olmo.JuegoDeUr.Bean.Ficha;
 import com.olmo.JuegoDeUr.Bean.Jugador;
 import com.olmo.JuegoDeUr.Bean.Tablero;
 import com.olmo.JuegoDeUr.Bean.Turno;
 import com.olmo.JuegoDeUr.Service.Utilidades;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class JuegoActivity extends AppCompatActivity implements View.OnClickListener {
     /**
@@ -26,6 +31,9 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
     private Jugador jN;
     private Integer tirada, fich, ocupantes, posicion;
     private Integer enCasaB, enCasaN;
+    private Toast toast;
+    private int turnos;
+   private Map<Ficha, ImageView> selectorFichasNegras, selectorFichasBlancas;
     /**
      * 0:Ancho, 1:Alto
      */
@@ -49,10 +57,12 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
     private ImageView ficha1B, ficha2B, ficha3B, ficha4B, ficha5B, ficha6B, ficha7B;
 
     /**Ficha auxiliar*/
-    ImageView fichaMover;
+    private ImageView fichaMover;
 
     private TextView textViewInfoNegro, textViewInfoBlanco,textViewFichasNegro,textViewFichasBlanco;
+    private Button buttonPausa;
     private boolean dados, ficha;
+
 
 
     @Override
@@ -69,6 +79,9 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
         textViewInfoBlanco = findViewById(R.id.textViewInfoBlanco);
         textViewFichasNegro = findViewById(R.id.textViewFichasNegro);
         textViewFichasBlanco = findViewById(R.id.textViewFichasBlanco);
+        selectorFichasNegras=new HashMap<>();
+        selectorFichasBlancas=new HashMap<>();
+        turnos=0;
 
         dadosNegro = findViewById(R.id.dadosNegro);
         dadosNegro.setOnClickListener(this);
@@ -83,7 +96,6 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
         ficha5N = findViewById(R.id.ficha5N); ficha5N.setOnClickListener(this);
         ficha6N = findViewById(R.id.ficha6N); ficha6N.setOnClickListener(this);
         ficha7N = findViewById(R.id.ficha7N); ficha7N.setOnClickListener(this);
-
 
         ficha1B = findViewById(R.id.ficha1B); ficha1B.setOnClickListener(this);
         ficha2B = findViewById(R.id.ficha2B); ficha2B.setOnClickListener(this);
@@ -110,8 +122,24 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
         jB.setColor(true);
         jB.setFichas(util.generarFichas(jB.getColor()));
 
+        selectorFichasBlancas.put(jB.getFichas().get(0),ficha1B);
+        selectorFichasBlancas.put(jB.getFichas().get(1),ficha2B);
+        selectorFichasBlancas.put(jB.getFichas().get(2),ficha3B);
+        selectorFichasBlancas.put(jB.getFichas().get(3),ficha4B);
+        selectorFichasBlancas.put(jB.getFichas().get(4),ficha5B);
+        selectorFichasBlancas.put(jB.getFichas().get(5),ficha6B);
+        selectorFichasBlancas.put(jB.getFichas().get(6),ficha7B);
+
         jN.setColor(false);
         jN.setFichas(util.generarFichas(jN.getColor()));
+
+        selectorFichasNegras.put(jN.getFichas().get(0),ficha1N);
+        selectorFichasNegras.put(jN.getFichas().get(1),ficha2N);
+        selectorFichasNegras.put(jN.getFichas().get(2),ficha3N);
+        selectorFichasNegras.put(jN.getFichas().get(3),ficha4N);
+        selectorFichasNegras.put(jN.getFichas().get(4),ficha5N);
+        selectorFichasNegras.put(jN.getFichas().get(5),ficha6N);
+        selectorFichasNegras.put(jN.getFichas().get(6),ficha7N);
 
         System.out.println("Empieza el juego");
         textViewInfoNegro.setText("Empieza el juego");
@@ -128,8 +156,17 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
      * @return Integer
      */
     public Boolean juego(Turno turno) {
-        dimensionesTablero[0] = tableroView.getWidth();
-        dimensionesTablero[1] = tableroView.getHeight();
+        if(turnos==0){
+            dimensionesTablero[0] = tableroView.getWidth();
+            dimensionesTablero[1] = tableroView.getHeight();
+
+            util.setCoordenadasIniciales(jB,selectorFichasBlancas);
+            util.setCoordenadasIniciales(jN,selectorFichasNegras);
+
+        }
+
+
+
         System.out.println("Ancho: " + dimensionesTablero[0]);
         System.out.println("alto: " + dimensionesTablero[1]);
         Boolean roseta = false;
@@ -148,71 +185,140 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
         ficha = false;
         tirada = this.util.tirarDados();
 
-        //Estado  tirada AKA 0
-
-        //   System.out.println("Te ha salido un " + tirada);
         if (tirada == 0) {
             runOnUiThread(() -> texto(turno.getColor(), "Pierdes turno pringao :P"));
-                try {
-                    thread.sleep(2500);
-                } catch (InterruptedException e) {
+            try {
+                thread.sleep(2500);
+            } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-        } else {
+        } else{
 
             if (turno.getColor()) {
-                do {
-                    runOnUiThread(() -> texto(turno.getColor(), "Te ha salido un " + tirada + " Elige una ficha"));
-                    do {
-                        try {
-                            thread.sleep(50);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                if(  (!util.evaluarDestino(jB, tablero.getRecorridoBlanco(), tablero.getRecorridoNegro(), tirada, 1) &&
+                        !util.evaluarDestino(jB, tablero.getRecorridoBlanco(), tablero.getRecorridoNegro(), tirada, 2) &&
+                        !util.evaluarDestino(jB, tablero.getRecorridoBlanco(), tablero.getRecorridoNegro(), tirada, 3) &&
+                        !util.evaluarDestino(jB, tablero.getRecorridoBlanco(), tablero.getRecorridoNegro(), tirada, 4) &&
+                        !util.evaluarDestino(jB, tablero.getRecorridoBlanco(), tablero.getRecorridoNegro(), tirada, 5) &&
+                        !util.evaluarDestino(jB, tablero.getRecorridoBlanco(), tablero.getRecorridoNegro(), tirada, 6) &&
+                        !util.evaluarDestino(jB, tablero.getRecorridoBlanco(), tablero.getRecorridoNegro(), tirada, 7))) {
+                    runOnUiThread(() -> texto(turno.getColor(), "No puedes mover ninguna ficha, :P"));
+                    try {
+                        thread.sleep(2500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
-                    while (!ficha);
-                    dados = false;
-                    ficha = false;
-                } while (!util.evaluarDestino(jB, tablero.getRecorridoBlanco(), tablero.getRecorridoNegro(), tirada,
-                        fich));
+                }else {
+                    do {
+                        runOnUiThread(() -> texto(turno.getColor(), "Te ha salido un " + tirada + " Elige una ficha"));
+                        do {
+                            try {
+                                thread.sleep(50);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        while (!ficha);
+                        dados = false;
+                        ficha = false;
+                        if (!util.ocupantes) {
+                            runOnUiThread(() -> {
+                                toast = Toast.makeText(getApplicationContext(), "¡Destino ocupado!", Toast.LENGTH_SHORT);
+                                toast.show();
+                            });
+                        }
+                    } while (!util.evaluarDestino(jB, tablero.getRecorridoBlanco(), tablero.getRecorridoNegro(), tirada,
+                            fich));
 
-                roseta = util.moverFicha(jB, jN, fich - 1, tirada, tablero.getRecorridoBlanco(),
-                        tablero.getRecorridoNegro());
-
-
-                    runOnUiThread(() -> util.posicionarFicha(fichaMover, dimensionesTablero,
-                            jB.getFichas().get(fich - 1),
-                            tablero.getRecorridoBlanco().get(jB.getFichas().get(fich - 1).getPosicion()).getCoordenadas()[0],
-                            tablero.getRecorridoBlanco().get(jB.getFichas().get(fich - 1).getPosicion()).getCoordenadas()[1]));
+                    roseta = util.moverFicha(jB, jN, fich - 1, tirada, tablero.getRecorridoBlanco(),
+                            tablero.getRecorridoNegro());
+                    /** Accion de comer sobre negras*/
+                    if(jB.getFichas().get(fich - 1).getPosicion()>14){
+                        runOnUiThread(() -> {
+                            util.posicionarFicha(fichaMover, dimensionesTablero,
+                                    jB.getFichas().get(fich - 1),
+                                    5,
+                                    2 );
+                            fichaMover.setVisibility(View.GONE);
+                        });
+                    }else{
+                        if (util.comida) {
+                        runOnUiThread(() -> util.posicionarFicha(selectorFichasNegras.get(util.fichaComida), dimensionesTablero,
+                                util.fichaComida,
+                                casaNegro[0],
+                                casaNegro[1]));
+                    }
+                        runOnUiThread(() -> util.posicionarFicha(fichaMover, dimensionesTablero,
+                                jB.getFichas().get(fich - 1),
+                                tablero.getRecorridoBlanco().get(jB.getFichas().get(fich - 1).getPosicion()).getCoordenadas()[0],
+                                tablero.getRecorridoBlanco().get(jB.getFichas().get(fich - 1).getPosicion()).getCoordenadas()[1]));
+                    }
+                }
             } else {
-                do {
-                    runOnUiThread(() -> texto(turno.getColor(), "Te ha salido un " + tirada + " Elige una ficha"));
-                    do {
-                        try {
-                            thread.sleep(50);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                if ((!util.evaluarDestino(jN, tablero.getRecorridoNegro(), tablero.getRecorridoBlanco(), tirada, 1) &&
+                        !util.evaluarDestino(jN, tablero.getRecorridoNegro(), tablero.getRecorridoBlanco(), tirada, 2) &&
+                        !util.evaluarDestino(jN, tablero.getRecorridoNegro(), tablero.getRecorridoBlanco(), tirada, 3) &&
+                        !util.evaluarDestino(jN, tablero.getRecorridoNegro(), tablero.getRecorridoBlanco(), tirada, 4) &&
+                        !util.evaluarDestino(jN, tablero.getRecorridoNegro(), tablero.getRecorridoBlanco(), tirada, 5) &&
+                        !util.evaluarDestino(jN, tablero.getRecorridoNegro(), tablero.getRecorridoBlanco(), tirada, 6) &&
+                        !util.evaluarDestino(jN, tablero.getRecorridoNegro(), tablero.getRecorridoBlanco(), tirada, 7))) {
+                    runOnUiThread(() -> texto(turno.getColor(), "No puedes mover ninguna ficha, :P"));
+                    try {
+                        thread.sleep(2500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
-                    while (!ficha);
-                    dados = false;
-                    ficha = false;
-                } while (!util.evaluarDestino(jN, tablero.getRecorridoNegro(), tablero.getRecorridoBlanco(), tirada,
-                        fich));
-                roseta = util.moverFicha(jN, jB, fich - 1, tirada, tablero.getRecorridoNegro(),
-                        tablero.getRecorridoBlanco());
+                } else {
+                    do {
+                        runOnUiThread(() -> texto(turno.getColor(), "Te ha salido un " + tirada + " Elige una ficha"));
+                        do {
+                            try {
+                                thread.sleep(50);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        while (!ficha);
+                        dados = false;
+                        ficha = false;
+                        if (!util.ocupantes) {
+                            runOnUiThread(() -> {
+                                toast = Toast.makeText(getApplicationContext(), "¡Destino ocupado!", Toast.LENGTH_SHORT);
+                                toast.show();
+                            });
+                        }
+                    } while (!util.evaluarDestino(jN, tablero.getRecorridoNegro(), tablero.getRecorridoBlanco(), tirada,
+                            fich));
+                    roseta = util.moverFicha(jN, jB, fich - 1, tirada, tablero.getRecorridoNegro(),
+                            tablero.getRecorridoBlanco());
+                    /** Accion de comer sobre blancas*/
+                    if(jN.getFichas().get(fich - 1).getPosicion()>14){
+                        runOnUiThread(() -> {
+                            util.posicionarFicha(fichaMover, dimensionesTablero,
+                                    jB.getFichas().get(fich - 1),
+                                    5,
+                                    0 );
 
-                runOnUiThread(() ->{//TODO COMER
-                    util.posicionarFicha(fichaMover, dimensionesTablero,
-                        jN.getFichas().get(fich - 1),
-                        tablero.getRecorridoNegro().get(jN.getFichas().get(fich - 1).getPosicion()).getCoordenadas()[0],
-                        tablero.getRecorridoNegro().get(jN.getFichas().get(fich - 1).getPosicion()).getCoordenadas()[1]);
+                            fichaMover.setVisibility(View.GONE);
+                        });
+                    }else{
+                        if (util.comida) {
+                        runOnUiThread(() -> util.posicionarFicha(selectorFichasBlancas.get(util.fichaComida), dimensionesTablero,
+                                util.fichaComida,
+                                casaBlanco[0],
+                                casaBlanco[1]));
+                    }
+                    runOnUiThread(() -> util.posicionarFicha(fichaMover, dimensionesTablero,
+                            jN.getFichas().get(fich - 1),
+                            tablero.getRecorridoNegro().get(jN.getFichas().get(fich - 1).getPosicion()).getCoordenadas()[0],
+                            tablero.getRecorridoNegro().get(jN.getFichas().get(fich - 1).getPosicion()).getCoordenadas()[1]));
+                    }
+                }
+                runOnUiThread(() -> {
+                    textViewFichasBlanco.setText("En casa " + enCasaB);
+                    textViewFichasNegro.setText("En casa " + enCasaN);
                 });
             }
-            runOnUiThread(() -> {
-                textViewFichasBlanco.setText("En casa " + enCasaB );
-                textViewFichasNegro.setText("En casa " + enCasaN );
-            });
         }
         dados = false;
         ficha = false;
@@ -366,10 +472,11 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
                 });
                 if (!juego(turno)) {
                     turno.setColor(!turno.getColor());
+                    util.comida=false;
                 }else{
                     runOnUiThread(() -> {
-                            Toast toast1 = Toast.makeText(getApplicationContext(),"Turno Extra", Toast.LENGTH_SHORT);
-                            toast1.show();
+                            toast = Toast.makeText(getApplicationContext(),"Turno Extra", Toast.LENGTH_SHORT);
+                            toast.show();
                     });
                 }
                 enCasaB = 0;

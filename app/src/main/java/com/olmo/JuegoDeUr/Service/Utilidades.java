@@ -2,9 +2,6 @@ package com.olmo.JuegoDeUr.Service;
 
 
 import android.animation.ObjectAnimator;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
 import com.olmo.JuegoDeUr.Bean.Ficha;
@@ -15,12 +12,14 @@ import com.olmo.JuegoDeUr.Bean.casilla.Roseta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class Utilidades {
 
     public boolean comida=false;
     public Ficha fichaComida;
+  public Boolean ocupantes=true, ocupantes2=true ;
 
     public Integer tirarDados() {
         Integer n;
@@ -38,11 +37,10 @@ public class Utilidades {
                 case 3:
                     resul++;
                     break;
-
             }
         }
 
-        return 4;
+        return resul;
     }
 
     public List<Ficha> generarFichas(Boolean color) {
@@ -181,35 +179,34 @@ public class Utilidades {
         return listaCasillas;
     }
 
+    /**Devuelve true si se puede ir a esa casilla
+     * false si no se puede*/
     public Boolean evaluarDestino(Jugador j1, List<Casilla> recorrido1, List<Casilla> recorrido2, Integer tirada, Integer ficha) {
 
         Ficha f = j1.getFichas().get(ficha-1);
         Integer posicion = f.getPosicion();
         Integer destino = posicion + tirada;
-        Boolean ocupantes = true, ocupantes2 = true;
+        ocupantes = true;
+        ocupantes2 = true;
 
         if (destino < 15) {
             ocupantes = recorrido1.get(destino).getOcupantes().isEmpty();
             ocupantes2 = recorrido2.get(destino).getOcupantes().isEmpty();
         } else if (destino == 15) {
-            f.setEnJuego(false);
             System.out.println("Ficha en casa");
-            recorrido1.get(f.getPosicion()).getOcupantes().remove(recorrido1.get(f.getPosicion()).getOcupantes().size() - 1);
-            f.setPosicion(destino);
-
-            return true;
+          return true;
 
         } else {
-            System.out.println("Esta fuera de limites , eres un terrorista");
+            System.out.println("Esta fuera de limites");
             return false;
         }
 
         if (!ocupantes) {
-            /**Ocupada, devuelve fasle*/
+            /**Ocupada, devuelve false*/
             System.out.println("Esta ocupada");
             System.out.println("Elige otra anda");
             return ocupantes;
-        } else if (!ocupantes2 && recorrido2.get(destino).getTipo() == 1) {
+        } else if ((!ocupantes2 && recorrido2.get(destino).getTipo() == 1) &&  destino>5 && destino<13) {
             System.out.println("Roseta Ocupada");
             return ocupantes2;
         }
@@ -234,8 +231,12 @@ public class Utilidades {
         Boolean ocupantes = true, ocupantes2 = true, roseta = false;
         Integer destino = posicion + tirada;
 
-
-        if (destino < 15) {
+        if (destino == 15) {
+            f.setEnJuego(false);
+            System.out.println("Ficha en casa");
+            recorrido1.get(f.getPosicion()).getOcupantes().remove(recorrido1.get(f.getPosicion()).getOcupantes().size() - 1);
+            f.setPosicion(destino);
+        } else if (destino < 15) {
             /**ocupantes del destino del mismo color*/
             //Integer ocupantes = recorrido1.get(destino).getOcupantes().size();
             ocupantes = recorrido1.get(destino).getOcupantes().isEmpty();
@@ -305,23 +306,28 @@ public class Utilidades {
     }
 
     public void posicionarFicha(ImageView ficha, int[] dimensionesTablero,Ficha f,int x ,int y){
+        System.out.println(dimensionesTablero[0]);
+        System.out.println(dimensionesTablero[1]);
         int x0=f.getCoordenadas()[0];
         int y0=f.getCoordenadas()[1];
         int yf=y-y0;
         int xf=x-x0;
-        // la propiedad "x" hace q se mueva de izquierda a derecha, puede ser
-        // en positivo o negativo (de derecha a izquierda)
-        ObjectAnimator object1=ObjectAnimator.ofFloat(ficha,"x", (dimensionesTablero[0]/8)*(x+0.25f));
-        object1.setDuration(1000);
-        object1.start();
-        // la propiedad "y" hace q se mueva desde el top hasta donde está posicionada
-        object1=ObjectAnimator.ofFloat(ficha,"y",(dimensionesTablero[1]/3)*(y+0.25f));
-        object1.setDuration(1000);
-        object1.start();
-       /* Animation anim= new TranslateAnimation(x0, (dimensionesTablero[0]/8)*xf, y0, (dimensionesTablero[1]/3)*yf);
-        anim.setDuration(1000);
-        anim.setFillAfter(true);
-        ficha.startAnimation(anim);*/
-        f.setCoordenadas(new int[] {x,y});
+
+            ObjectAnimator object1 = ObjectAnimator.ofFloat(ficha, "x", (dimensionesTablero[0] / 8) * (x + 0.25f));
+            object1.setDuration(1000);
+            object1.start();
+            object1 = ObjectAnimator.ofFloat(ficha, "y", (dimensionesTablero[1] / 3) * (y + 0.25f));
+            object1.setDuration(1000);
+            object1.start();
+
+            f.setCoordenadas(new int[]{x, y});
+
     }
+    public void setCoordenadasIniciales(Jugador j, Map<Ficha,ImageView> selector){
+        for(int i=0;i<j.getFichas().size();i++){
+            j.getFichas().get(i).setCoordenadasIniciales(new float[]{selector.get(j.getFichas().get(i)).getX(), selector.get(j.getFichas().get(i)).getY()});
+        }
+
+    }
+
 }

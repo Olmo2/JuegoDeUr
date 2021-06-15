@@ -330,4 +330,13 @@ public class Utilidades {
 
     }
 
+    public void colocarFichasInicio(Jugador j, Map<Ficha,ImageView> selector,int[] dimensionesTablero,int[] casa){
+        for(int i=0;i<j.getFichas().size();i++){
+            selector.get(j.getFichas().get(i)).setX((dimensionesTablero[0] / 8) * (casa[0] + 0.25f));
+            selector.get(j.getFichas().get(i)).setY((dimensionesTablero[1] / 3) * (casa[1] + 0.25f));
+
+        }
+
+    }
+
 }

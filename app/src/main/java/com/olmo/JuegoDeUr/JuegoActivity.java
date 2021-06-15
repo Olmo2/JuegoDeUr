@@ -1,8 +1,12 @@
 package com.olmo.JuegoDeUr;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +18,7 @@ import com.olmo.JuegoDeUr.Bean.Ficha;
 import com.olmo.JuegoDeUr.Bean.Jugador;
 import com.olmo.JuegoDeUr.Bean.Tablero;
 import com.olmo.JuegoDeUr.Bean.Turno;
+import com.olmo.JuegoDeUr.Repository.MiBaseDeDatos;
 import com.olmo.JuegoDeUr.Service.Utilidades;
 
 import java.util.HashMap;
@@ -32,7 +37,7 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
     private Integer tirada, fich, ocupantes, posicion;
     private Integer enCasaB, enCasaN;
     private Toast toast;
-    private int turnos;
+    private int contadorTurnos;
    private Map<Ficha, ImageView> selectorFichasNegras, selectorFichasBlancas;
     /**
      * 0:Ancho, 1:Alto
@@ -61,6 +66,9 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
 
     private TextView textViewInfoNegro, textViewInfoBlanco,textViewFichasNegro,textViewFichasBlanco;
     private Button buttonPausa;
+
+    private EditText jugador1,jugador2;
+    private TextView turnos;
     private boolean dados, ficha;
 
 
@@ -81,7 +89,7 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
         textViewFichasBlanco = findViewById(R.id.textViewFichasBlanco);
         selectorFichasNegras=new HashMap<>();
         selectorFichasBlancas=new HashMap<>();
-        turnos=0;
+        contadorTurnos=0;
 
         dadosNegro = findViewById(R.id.dadosNegro);
         dadosNegro.setOnClickListener(this);
@@ -156,15 +164,12 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
      * @return Integer
      */
     public Boolean juego(Turno turno) {
-        if(turnos==0){
+
             dimensionesTablero[0] = tableroView.getWidth();
             dimensionesTablero[1] = tableroView.getHeight();
 
             util.setCoordenadasIniciales(jB,selectorFichasBlancas);
             util.setCoordenadasIniciales(jN,selectorFichasNegras);
-
-        }
-
 
 
         System.out.println("Ancho: " + dimensionesTablero[0]);
@@ -465,6 +470,8 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
     class ThreadJuego extends Thread {
         @Override
         public void run() {
+            util.colocarFichasInicio(jB,selectorFichasBlancas,dimensionesTablero,casaBlanco);
+            util.colocarFichasInicio(jN,selectorFichasNegras,dimensionesTablero,casaNegro);
             while (enCasaB != 7 && enCasaN != 7) {
                 runOnUiThread(() -> {
                     textViewFichasNegro.setText("Negras en casa " + enCasaN);
@@ -473,6 +480,7 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
                 if (!juego(turno)) {
                     turno.setColor(!turno.getColor());
                     util.comida=false;
+                    contadorTurnos++;
                 }else{
                     runOnUiThread(() -> {
                             toast = Toast.makeText(getApplicationContext(),"Turno Extra", Toast.LENGTH_SHORT);
@@ -498,6 +506,37 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
                     textViewInfoNegro.setText("¡Victoria!");
                     textViewInfoBlanco.setText("Derrota :(");
                 }
+
+
+                MiBaseDeDatos bd = new MiBaseDeDatos(JuegoActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(JuegoActivity.this);
+                // Get the layout inflater
+                LayoutInflater inflater = JuegoActivity.this.getLayoutInflater();
+                builder.setTitle("REGISTRAR PARTIDA");
+                final View inflator = inflater.inflate(R.layout.add_partida, null);
+                jugador1 = (EditText) inflator.findViewById(R.id.jugador1);
+                jugador2 = (EditText) inflator.findViewById(R.id.jugador2);
+                turnos = (TextView) inflator.findViewById(R.id.turnos);
+                turnos.setText(contadorTurnos);
+                // Inflate and set the layout for the dialog
+                // Pass null as the parent view because its going in the dialog layout
+                builder.setView(inflator)
+                        .setPositiveButton("Añadir",new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                bd.insertarPartida(jugador1.getText().toString(), jugador2.getText().toString(),Integer.parseInt(turnos.getText().toString()));
+                            }
+                        })
+                        .setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        });
+                AlertDialog dialog =  builder.create();
+                dialog.show();
             });
         }
     }

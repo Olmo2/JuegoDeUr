@@ -3,6 +3,7 @@ package com.olmo.JuegoDeUr;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -62,11 +63,21 @@ public class PartidasActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> pariente, View view, int posicion, long id) {
                 Partida elegido = (Partida) pariente.getItemAtPosition(posicion);
 
-                CharSequence texto = "ID: " + elegido.getId() +"\nJUGADOR 1: "+ elegido.getJugador1() +"\nJUGADOR 2: "+ elegido.getJugador2()+"\nTURNOS: "+ elegido.getTurnos();
+                CharSequence texto ="Ganador : "+ elegido.getJugador1() +"\nPerdedor : "+ elegido.getJugador2()+"\nTotal de turnos : "+ elegido.getTurnos();
               /*  Toast toast = Toast.makeText(com.olmo.listaanimales.MainActivity.this, texto, Toast.LENGTH_LONG);
                 toast.show();*/
-                AlertDialog.Builder alerta = new AlertDialog.Builder(PartidasActivity.this);
-                alerta.setTitle("PARTIDA ELEGIDA");
+                AlertDialog.Builder alerta = new AlertDialog.Builder(PartidasActivity.this).setNegativeButton("Borrar",new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        bd.borrarPartida(elegido.getId());
+
+                        inicializar();
+
+                    }
+                });
+                alerta.setTitle("Partida número :" + elegido.getId());
                 alerta.setMessage(texto);
                 alerta.create();
                 alerta.show();

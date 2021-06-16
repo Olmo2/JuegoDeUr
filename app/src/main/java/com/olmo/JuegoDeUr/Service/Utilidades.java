@@ -2,6 +2,7 @@ package com.olmo.JuegoDeUr.Service;
 
 
 import android.animation.ObjectAnimator;
+import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
 import com.olmo.JuegoDeUr.Bean.Ficha;
@@ -308,6 +309,7 @@ public class Utilidades {
     public void posicionarFicha(ImageView ficha, int[] dimensionesTablero,Ficha f,int x ,int y){
         System.out.println(dimensionesTablero[0]);
         System.out.println(dimensionesTablero[1]);
+
         int x0=f.getCoordenadas()[0];
         int y0=f.getCoordenadas()[1];
         int yf=y-y0;
@@ -335,6 +337,13 @@ public class Utilidades {
             selector.get(j.getFichas().get(i)).setX((dimensionesTablero[0] / 8) * (casa[0] + 0.25f));
             selector.get(j.getFichas().get(i)).setY((dimensionesTablero[1] / 3) * (casa[1] + 0.25f));
 
+        }
+
+    }
+
+    public void setColorFichas(Map<Ficha,ImageView> selector, Drawable color){
+        for(int i=0;i<selector.size();i++){
+            selector.get(i).setImageDrawable(color);
         }
 
     }

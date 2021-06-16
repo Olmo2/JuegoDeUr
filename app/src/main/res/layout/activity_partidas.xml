@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/wood"
     android:orientation="vertical"
-    tools:context=".PartidasActivity" >
+    tools:context=".PartidasActivity">
 
     <TextView
         android:id="@+id/textView"
@@ -13,6 +14,7 @@
         android:layout_height="98dp"
         android:gravity="center"
         android:text="@string/lista"
+        android:textColor="@color/design_default_color_secondary_variant"
         android:textSize="30sp" />
 
     <ListView

@@ -6,4 +6,14 @@
     <string name="salir">Salir del Juego</string>
     <string name="lista">Lista de Partidas</string>
     <string name="vs">Vs</string>
+    <string name="menuPrincipal">Menú Principal</string>
+    <string name="reanudar">Reanudar Partida</string>
+    <string name="sonido">Sonido</string>
+    <string name="colorTablero">Color del Tablero</string>
+    <string name="colorFichas">Color de las Fichas</string>
+    <string name="blancoNegro"><![CDATA[Blanco & Negro]]></string>
+    <string name="rojoVerde"><![CDATA[Rojo & Verde]]></string>
+    <string name="guardar">Guardar</string>
+    <string name="tableroAzul">Tablero Azul</string>
+    <string name="tableroNegro">Tablero Negro</string>
 </resources>

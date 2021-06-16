@@ -12,8 +12,8 @@ import java.util.ArrayList;
 
 public class MiBaseDeDatos extends SQLiteOpenHelper {
 
-    private static final String NOMBRE_BD = "Agenda.sqlite3";
-    private static final int VERSION_BD = 2;
+    private static final String NOMBRE_BD = "JuegoDeUr.sqlite3";
+    private static final int VERSION_BD = 1;
     private static final String CREAR_TABLA1 =
             "CREATE TABLE "+ ContratoJuego.Partidas.TABLA1 + "(" +
                     ContratoJuego.Partidas.COLUMNA1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " +

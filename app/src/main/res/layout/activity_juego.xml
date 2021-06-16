@@ -5,6 +5,7 @@
     android:id="@+id/layoutPrincipal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/wood"
     android:orientation="vertical"
     tools:context=".JuegoActivity">
 
@@ -38,7 +39,7 @@
             android:id="@+id/buttonPausa"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.17"
+            android:layout_weight="0.13"
             android:background="@drawable/pause"
             app:backgroundTint="@color/black" />
 
@@ -222,7 +223,7 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.17" />
+            android:layout_weight="0.13" />
 
     </LinearLayout>
 </LinearLayout>

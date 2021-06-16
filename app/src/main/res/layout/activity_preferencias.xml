@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/wood"
+    tools:context=".PreferenciasActivity">
+
+    <RadioGroup
+        android:id="@+id/groupFichas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switchSonido">
+
+        <TextView
+            android:id="@+id/textViewFichas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/colorFichas"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/radioButtonBlancoNegro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/blancoNegro" />
+
+        <RadioButton
+            android:id="@+id/radioButtonRojoVerde"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rojoVerde" />
+    </RadioGroup>
+
+    <Switch
+        android:id="@+id/switchSonido"
+        android:layout_width="236dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/sonido"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/groupTablero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switchSonido">
+
+        <TextView
+            android:id="@+id/textViewTablero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/colorTablero"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/radioButtonTableroAzul"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tableroAzul" />
+
+        <RadioButton
+            android:id="@+id/radioButtonTableroNegro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tableroNegro" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/buttonGuadar"
+        android:layout_width="221dp"
+        android:layout_height="49dp"
+        android:layout_marginBottom="50dp"
+        android:text="@string/guardar"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

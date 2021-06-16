@@ -1,7 +1,12 @@
 package com.olmo.JuegoDeUr;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 import com.olmo.JuegoDeUr.Bean.Ficha;
 import com.olmo.JuegoDeUr.Bean.Jugador;
@@ -38,7 +45,8 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
     private Integer enCasaB, enCasaN;
     private Toast toast;
     private int contadorTurnos;
-   private Map<Ficha, ImageView> selectorFichasNegras, selectorFichasBlancas;
+    private Map<Ficha, ImageView> selectorFichasNegras, selectorFichasBlancas;
+    private MediaPlayer mp;
     /**
      * 0:Ancho, 1:Alto
      */
@@ -70,6 +78,9 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
     private EditText jugador1,jugador2;
     private TextView turnos;
     private boolean dados, ficha;
+    private SharedPreferences preferences;
+    private String colorFichaKey,colorTableroKey,sonidoKey;
+    private Drawable verde,rojo,negro,blanco, tableroAzul, tableroNegro;
 
 
 
@@ -96,6 +107,8 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
 
         dadosBlanco = findViewById(R.id.dadosBlanco);
         dadosBlanco.setOnClickListener(this);
+
+        buttonPausa = findViewById(R.id.buttonPausa); buttonPausa.setOnClickListener(this);
 
         ficha1N = findViewById(R.id.ficha1N); ficha1N.setOnClickListener(this);
         ficha2N = findViewById(R.id.ficha2N); ficha2N.setOnClickListener(this);
@@ -155,6 +168,38 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
 
         dimensionesTablero[0] = tableroView.getWidth();
         dimensionesTablero[1] = tableroView.getHeight();
+
+        mp = MediaPlayer.create(this, R.raw.dados);
+
+        preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
+        colorFichaKey="colorFichaKey";
+        colorTableroKey="colorTableroKey";
+        sonidoKey = "sonidoKey";
+        verde = ContextCompat.getDrawable(getApplicationContext(),R.drawable.green);
+        rojo = ContextCompat.getDrawable(getApplicationContext(),R.drawable.red);
+        blanco = ContextCompat.getDrawable(getApplicationContext(),R.drawable.white);
+        negro = ContextCompat.getDrawable(getApplicationContext(),R.drawable.black);
+
+        tableroAzul = ContextCompat.getDrawable(getApplicationContext(),R.drawable.board);
+        tableroNegro = ContextCompat.getDrawable(getApplicationContext(),R.drawable.board_black);
+
+       /* if(preferences.getBoolean(colorFichaKey,true)){
+            runOnUiThread(() ->{
+                util.setColorFichas(selectorFichasBlancas,blanco);
+                util.setColorFichas(selectorFichasNegras,negro);
+            });
+        }else{
+            runOnUiThread(() ->{
+                util.setColorFichas(selectorFichasBlancas,verde);
+                util.setColorFichas(selectorFichasNegras,rojo);
+            });
+        }
+
+        if(preferences.getBoolean(colorTableroKey,true)){
+            runOnUiThread(() -> tableroView.setBackground(tableroAzul));
+        }else{
+            runOnUiThread(() -> tableroView.setBackground(tableroNegro));
+        }*/
 
         thread.start();
     }
@@ -347,9 +392,15 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
         switch (v.getId()) {
             /**Botones Tirar Dados*/
             case (R.id.dadosNegro):
+
                 if (!turno.getColor()) {
                     tirada = this.util.tirarDados();
                     dados = true;
+                    if(mp.isPlaying()){
+                        mp.stop();
+                    }
+                    mp = MediaPlayer.create(this, R.raw.dados);
+                    mp.start();
                 } else
                     dados = false;
                 break;
@@ -358,6 +409,11 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
                 if (turno.getColor()) {
                     tirada = this.util.tirarDados();
                     dados = true;
+                    if(mp.isPlaying()){
+                        mp.stop();
+                    }
+                    mp = MediaPlayer.create(this, R.raw.dados);
+                    mp.start();
                 } else
                     dados = false;
                 break;
@@ -463,6 +519,53 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
                     ficha = true;
                 } else ficha = false;
                 break;
+            case (R.id.buttonPausa):
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                // Get the layout inflater
+                LayoutInflater inflater = this.getLayoutInflater();
+                builder.setTitle("MENÚ DE PAUSA");
+                final View inflator = inflater.inflate(R.layout.menu_pausa, null);
+                builder.setView(inflator)
+                        .setNegativeButton("Volver al juego",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog dialog =  builder.create();
+                Button menu = inflator.findViewById(R.id.menuPrincipal);
+                menu.setOnClickListener(this::onClick);
+                Button salir = inflator.findViewById(R.id.salirDelJuego);
+                salir.setOnClickListener(this::onClick);
+                Button preferencias = inflator.findViewById(R.id.menuPreferencias);
+                preferencias.setOnClickListener(this::onClick);
+                dialog.show();
+                break;
+            case (R.id.menuPrincipal):
+                Intent menuPrincipal = new Intent(JuegoActivity.this, MenuPrincipal.class);
+                startActivity(menuPrincipal);
+                    break;
+            case (R.id.salirDelJuego):
+                this.finishAffinity();
+                break;
+
+            case (R.id.menuPreferencias):
+                //dialog.dismiss();
+                break;
+
+        }
+        if(dados) {
+            if(mp.isPlaying()){
+                mp.stop();
+            }
+            mp = MediaPlayer.create(this, R.raw.dados);
+            mp.start();
+        }else if(ficha){
+            if(mp.isPlaying()){
+                mp.stop();
+            }
+            mp = MediaPlayer.create(this, R.raw.ficha);
+            mp.start();
 
         }
     }

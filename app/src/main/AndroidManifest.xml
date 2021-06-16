@@ -9,7 +9,12 @@
         android:roundIcon="@drawable/icon_ur"
         android:supportsRtl="true"
         android:theme="@style/Theme.JuegoDeUr">
-        <activity android:name=".PartidasActivity"></activity>
+        <activity
+            android:name=".PreferenciasActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".PartidasActivity"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".JuegoActivity"
             android:screenOrientation="landscape" />

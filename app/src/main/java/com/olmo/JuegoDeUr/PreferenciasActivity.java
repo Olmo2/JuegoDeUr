@@ -45,6 +45,8 @@ public class PreferenciasActivity extends AppCompatActivity implements View.OnCl
 
         if(preferences.getBoolean(sonidoKey,true)){
             sonido.setChecked(true);
+        }else{
+            sonido.setChecked(false);
         }
         if(preferences.getBoolean(colorFichaKey,true)){
             rojoVerde.setChecked(false);
@@ -71,8 +73,9 @@ public class PreferenciasActivity extends AppCompatActivity implements View.OnCl
                 SharedPreferences.Editor editor =preferences.edit();
 
                 editor.putBoolean(sonidoKey, sonido.isChecked());
-                editor.putBoolean(colorFichaKey, rojoVerde.isChecked());
+                editor.putBoolean(colorFichaKey, blancoNegro.isChecked());
                 editor.putBoolean(colorTableroKey,tableroAzul.isChecked());
+
                 editor.commit();
 
                 Intent intent = new Intent( PreferenciasActivity.this, MenuPrincipal.class);

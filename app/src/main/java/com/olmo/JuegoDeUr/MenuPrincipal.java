@@ -49,10 +49,6 @@ public class MenuPrincipal extends AppCompatActivity implements View.OnClickList
         preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
 
-        editor.putBoolean(colorFichaKey, true);
-        editor.putBoolean(colorTableroKey, true);
-        editor.putBoolean(sonidoKey, true);
-        editor.commit();
     }
 
     @Override

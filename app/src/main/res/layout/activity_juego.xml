@@ -25,15 +25,24 @@
             android:id="@+id/textViewInfoNegro"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="0.66"
-            android:text="TextView" />
+            android:gravity="center"
+            android:text="Te toca crack"
+            android:textColor="@color/white"
+            android:textSize="35sp"
+            android:rotation = "180"/>
 
         <TextView
             android:id="@+id/textViewFichasNegro"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="0.33"
-            android:text="TextView" />
+            android:text="En casa "
+            android:textColor="@color/design_default_color_on_primary"
+            android:textSize="35sp"
+            android:rotation = "180"/>
 
         <Button
             android:id="@+id/buttonPausa"
@@ -53,143 +62,171 @@
         android:background="@drawable/board">
 
         <ImageView
-            android:id="@+id/ficha5B"
-            android:layout_width="36dp"
-            android:layout_height="31dp"
-            android:layout_marginEnd="310dp"
-            android:layout_marginBottom="32dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/white" />
-
-        <ImageView
             android:id="@+id/ficha1B"
             android:layout_width="36dp"
             android:layout_height="31dp"
-            android:layout_marginEnd="310dp"
-            android:layout_marginBottom="32dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.550"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.815"
             app:srcCompat="@drawable/white" />
 
         <ImageView
             android:id="@+id/ficha2B"
             android:layout_width="36dp"
             android:layout_height="31dp"
-            android:layout_marginEnd="310dp"
-            android:layout_marginBottom="32dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.550"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.815"
             app:srcCompat="@drawable/white" />
 
         <ImageView
             android:id="@+id/ficha3B"
             android:layout_width="36dp"
             android:layout_height="31dp"
-            android:layout_marginEnd="310dp"
-            android:layout_marginBottom="32dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.550"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.815"
             app:srcCompat="@drawable/white" />
 
         <ImageView
             android:id="@+id/ficha4B"
             android:layout_width="36dp"
             android:layout_height="31dp"
-            android:layout_marginEnd="310dp"
-            android:layout_marginBottom="32dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.550"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.815"
             app:srcCompat="@drawable/white" />
 
         <ImageView
-            android:id="@+id/ficha7B"
+            android:id="@+id/ficha5B"
             android:layout_width="36dp"
             android:layout_height="31dp"
-            android:layout_marginEnd="310dp"
-            android:layout_marginBottom="32dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.550"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.815"
             app:srcCompat="@drawable/white" />
 
         <ImageView
             android:id="@+id/ficha6B"
             android:layout_width="36dp"
             android:layout_height="31dp"
-            android:layout_marginEnd="310dp"
-            android:layout_marginBottom="32dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.550"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.815"
+            app:srcCompat="@drawable/white" />
+
+        <ImageView
+            android:id="@+id/ficha7B"
+            android:layout_width="36dp"
+            android:layout_height="31dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.550"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.815"
             app:srcCompat="@drawable/white" />
 
         <ImageView
             android:id="@+id/ficha1N"
             android:layout_width="36dp"
             android:layout_height="31dp"
-            android:layout_marginTop="21dp"
-            android:layout_marginEnd="310dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.550"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.087"
             app:srcCompat="@drawable/black" />
 
         <ImageView
             android:id="@+id/ficha2N"
             android:layout_width="36dp"
             android:layout_height="31dp"
-            android:layout_marginTop="21dp"
-            android:layout_marginEnd="310dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.550"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.087"
             app:srcCompat="@drawable/black" />
 
         <ImageView
             android:id="@+id/ficha3N"
             android:layout_width="36dp"
             android:layout_height="31dp"
-            android:layout_marginTop="21dp"
-            android:layout_marginEnd="310dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.550"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.087"
             app:srcCompat="@drawable/black" />
 
         <ImageView
             android:id="@+id/ficha4N"
             android:layout_width="36dp"
             android:layout_height="31dp"
-            android:layout_marginTop="21dp"
-            android:layout_marginEnd="310dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.550"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.087"
             app:srcCompat="@drawable/black" />
 
         <ImageView
             android:id="@+id/ficha5N"
             android:layout_width="36dp"
             android:layout_height="31dp"
-            android:layout_marginTop="21dp"
-            android:layout_marginEnd="310dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.550"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.087"
             app:srcCompat="@drawable/black" />
 
         <ImageView
             android:id="@+id/ficha6N"
             android:layout_width="36dp"
             android:layout_height="31dp"
-            android:layout_marginTop="21dp"
-            android:layout_marginEnd="310dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.550"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.087"
             app:srcCompat="@drawable/black" />
 
         <ImageView
             android:id="@+id/ficha7N"
             android:layout_width="36dp"
             android:layout_height="31dp"
-            android:layout_marginTop="21dp"
-            android:layout_marginEnd="310dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.550"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.087"
             app:srcCompat="@drawable/black" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -210,15 +247,22 @@
             android:id="@+id/textViewInfoBlanco"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="0.66"
-            android:text="TextView" />
+            android:gravity="center"
+            android:text=":("
+            android:textColor="@color/white"
+            android:textSize="35sp" />
 
         <TextView
             android:id="@+id/textViewFichasBlanco"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="0.33"
-            android:text="TextView" />
+            android:text="En casa"
+            android:textColor="@color/white"
+            android:textSize="35sp" />
 
         <Space
             android:layout_width="0dp"

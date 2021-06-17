@@ -2,6 +2,8 @@ package com.olmo.JuegoDeUr.Service;
 
 
 import android.animation.ObjectAnimator;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
@@ -10,6 +12,7 @@ import com.olmo.JuegoDeUr.Bean.Jugador;
 import com.olmo.JuegoDeUr.Bean.casilla.Casa;
 import com.olmo.JuegoDeUr.Bean.casilla.Casilla;
 import com.olmo.JuegoDeUr.Bean.casilla.Roseta;
+import com.olmo.JuegoDeUr.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +23,10 @@ public class Utilidades {
 
     public boolean comida=false;
     public Ficha fichaComida;
-  public Boolean ocupantes=true, ocupantes2=true ;
+    public Boolean ocupantes=true, ocupantes2=true ;
 
+    /**
+     * Genera ún numero entre 0 & 4*/
     public Integer tirarDados() {
         Integer n;
         Integer resul = 0;
@@ -33,17 +38,17 @@ public class Utilidades {
                 case 1:
                     resul += 0;
                     break;
-
                 case 2:
                 case 3:
                     resul++;
                     break;
             }
         }
-
         return resul;
     }
-
+    /**
+     *@param color el color de las fichas
+     * @return lista de {@link Ficha} generadas*/
     public List<Ficha> generarFichas(Boolean color) {
         Ficha f;
         List<Ficha> listaFichas = new ArrayList<>();
@@ -62,6 +67,9 @@ public class Utilidades {
         return listaFichas;
     }
 
+    /**
+     *@param recorrido un número de identificacion de que recorrido se ha de generar
+     * @return lista de {@link Casilla} el recorrido generado*/
     public List<Casilla> generarRecorrido(int recorrido) {
         Casilla c;
         List<Ficha> lista;
@@ -180,8 +188,15 @@ public class Utilidades {
         return listaCasillas;
     }
 
-    /**Devuelve true si se puede ir a esa casilla
-     * false si no se puede*/
+    /**Evalua si se puede ono mover hasta el destino
+     * @param j1 {@link Jugador} Jugador que juega el turno
+     * @param recorrido1 lista de {@link Casilla} del jugador que juega el turno
+     * @param recorrido2 lista de {@link Casilla} del jugador que no juega el turno
+     * @param tirada número resultado de la tirada
+     * @param ficha índice de la ficha
+     * @return un booleano con el resultado de la evaluacion
+     * true-> si
+     * false->no*/
     public Boolean evaluarDestino(Jugador j1, List<Casilla> recorrido1, List<Casilla> recorrido2, Integer tirada, Integer ficha) {
 
         Ficha f = j1.getFichas().get(ficha-1);
@@ -216,7 +231,7 @@ public class Utilidades {
 
     }
 
-    /**
+    /** Acción de mover una ficha
      * @param j1         jugador que juega el turno
      * @param j2         El otro jugador
      * @param ficha      ficha elegida para moverse
@@ -250,7 +265,6 @@ public class Utilidades {
                 System.out.println("Elige otra anda");
 
             } else if (destino > 4 && destino < 12 && !ocupantes2) {
-
                 comerFicha(destino, j2.getFichas(), recorrido2);
                 comida=true;
                 System.out.println("La ficha se vuelve a mover");
@@ -295,6 +309,10 @@ public class Utilidades {
 
     }
 
+    /**Acción de comer una ficha
+     * @param destino número de la {@link Casilla} a la que se va a mover la ficha.
+     * @param listaFichas lista de {@link Ficha} a la que pertenece la {@link Ficha}.
+     * @param listaCasillas lista de {@link Casilla} por la que se mueve la {@link Ficha}.*/
     public void comerFicha(Integer destino, List<Ficha> listaFichas, List<Casilla> listaCasillas) {
         for (int i = 0; i < listaFichas.size(); i++) {
             if (listaFichas.get(i).getPosicion() == destino) {
@@ -306,6 +324,12 @@ public class Utilidades {
         }
     }
 
+    /**
+     * @param ficha la {@link ImageView} que se va a posicionar.
+     * @param dimensionesTablero dimensiones del tablero.
+     * @param f la {@link Ficha} correspondiente al {@link ImageView}.
+     * @param x coordenada x en el tablero.
+     * @param y coordenada y en el tablero.*/
     public void posicionarFicha(ImageView ficha, int[] dimensionesTablero,Ficha f,int x ,int y){
         System.out.println(dimensionesTablero[0]);
         System.out.println(dimensionesTablero[1]);
@@ -323,27 +347,36 @@ public class Utilidades {
             object1.start();
 
             f.setCoordenadas(new int[]{x, y});
-
     }
+
+    /**Asigna las coordenadas de inicia.
+     * @param j {@link Jugador} actual.
+     * @param selector {@link Map} de {@link Ficha}, asociadas con un {@link ImageView}.*/
     public void setCoordenadasIniciales(Jugador j, Map<Ficha,ImageView> selector){
         for(int i=0;i<j.getFichas().size();i++){
             j.getFichas().get(i).setCoordenadasIniciales(new float[]{selector.get(j.getFichas().get(i)).getX(), selector.get(j.getFichas().get(i)).getY()});
         }
-
     }
 
+    /**Posiciona inicialmente las fichas en el tablero.
+     * @param j {@link Jugador} actual.
+     * @param selector {@link Map} de {@link Ficha}, asociadas con un {@link ImageView}.
+     * @param dimensionesTablero dimensiones del tablero.
+     * @param casa coordenadas de la casilla inicial.*/
     public void colocarFichasInicio(Jugador j, Map<Ficha,ImageView> selector,int[] dimensionesTablero,int[] casa){
         for(int i=0;i<j.getFichas().size();i++){
             selector.get(j.getFichas().get(i)).setX((dimensionesTablero[0] / 8) * (casa[0] + 0.25f));
             selector.get(j.getFichas().get(i)).setY((dimensionesTablero[1] / 3) * (casa[1] + 0.25f));
-
         }
-
     }
 
-    public void setColorFichas(Map<Ficha,ImageView> selector, Drawable color){
+    /**Define el color de las fichas.
+     * @param j {@link Jugador} actual.
+     * @param selector {@link Map} de {@link Ficha}, asociadas con un {@link ImageView}.
+     * @param color la clave del Drawable que se asigna.*/
+    public void setColorFichas(Map<Ficha,ImageView> selector, int color,Jugador j){
         for(int i=0;i<selector.size();i++){
-            selector.get(i).setImageDrawable(color);
+            selector.get(j.getFichas().get(i)).setImageResource(color);
         }
 
     }

@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JuegoDeUr">
         <activity
+            android:name=".MenuPrincipal"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".PreferenciasActivity"
             android:screenOrientation="landscape" />
         <activity
@@ -19,7 +22,7 @@
             android:name=".JuegoActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".MenuPrincipal"
+            android:name=".PantallaCarga"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

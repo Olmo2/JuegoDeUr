@@ -5,11 +5,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,9 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 
 import com.olmo.JuegoDeUr.Bean.Ficha;
 import com.olmo.JuegoDeUr.Bean.Jugador;
@@ -51,13 +49,12 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
      * 0:Ancho, 1:Alto
      */
     private int[] dimensionesTablero = new int[2];
-
     private final int[] casaNegro = new int[]{4, 0};
     private final int[] casaBlanco = new int[]{4, 2};
 
     private ConstraintLayout tableroView;
     /**
-     * A->Negro, B->Blanco
+     * N->Negro, B->Blanco
      */
     private ImageView dadosNegro, dadosBlanco;
     /**
@@ -69,26 +66,28 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
      */
     private ImageView ficha1B, ficha2B, ficha3B, ficha4B, ficha5B, ficha6B, ficha7B;
 
-    /**Ficha auxiliar*/
+    /**
+     * Ficha auxiliar
+     */
     private ImageView fichaMover;
 
-    private TextView textViewInfoNegro, textViewInfoBlanco,textViewFichasNegro,textViewFichasBlanco;
+    private TextView textViewInfoNegro, textViewInfoBlanco, textViewFichasNegro, textViewFichasBlanco;
     private Button buttonPausa;
 
-    private EditText jugador1,jugador2;
+    private EditText jugador1, jugador2;
     private TextView turnos;
     private boolean dados, ficha;
     private SharedPreferences preferences;
-    private String colorFichaKey,colorTableroKey,sonidoKey;
-    private Drawable verde,rojo,negro,blanco, tableroAzul, tableroNegro;
-
+    private String colorFichaKey, colorTableroKey, sonidoKey;
+    private View layout;
+    private TextView txt;
+    private LayoutInflater inflater;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_juego);
-        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         /** INICIALIZACIONES */
         thread = new ThreadJuego();
@@ -98,9 +97,9 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
         textViewInfoBlanco = findViewById(R.id.textViewInfoBlanco);
         textViewFichasNegro = findViewById(R.id.textViewFichasNegro);
         textViewFichasBlanco = findViewById(R.id.textViewFichasBlanco);
-        selectorFichasNegras=new HashMap<>();
-        selectorFichasBlancas=new HashMap<>();
-        contadorTurnos=0;
+        selectorFichasNegras = new HashMap<>();
+        selectorFichasBlancas = new HashMap<>();
+        contadorTurnos = 0;
 
         dadosNegro = findViewById(R.id.dadosNegro);
         dadosNegro.setOnClickListener(this);
@@ -108,29 +107,44 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
         dadosBlanco = findViewById(R.id.dadosBlanco);
         dadosBlanco.setOnClickListener(this);
 
-        buttonPausa = findViewById(R.id.buttonPausa); buttonPausa.setOnClickListener(this);
+        buttonPausa = findViewById(R.id.buttonPausa);
+        buttonPausa.setOnClickListener(this);
 
-        ficha1N = findViewById(R.id.ficha1N); ficha1N.setOnClickListener(this);
-        ficha2N = findViewById(R.id.ficha2N); ficha2N.setOnClickListener(this);
-        ficha3N = findViewById(R.id.ficha3N); ficha3N.setOnClickListener(this);
-        ficha4N = findViewById(R.id.ficha4N); ficha4N.setOnClickListener(this);
-        ficha5N = findViewById(R.id.ficha5N); ficha5N.setOnClickListener(this);
-        ficha6N = findViewById(R.id.ficha6N); ficha6N.setOnClickListener(this);
-        ficha7N = findViewById(R.id.ficha7N); ficha7N.setOnClickListener(this);
+        ficha1N = findViewById(R.id.ficha1N);
+        ficha1N.setOnClickListener(this);
+        ficha2N = findViewById(R.id.ficha2N);
+        ficha2N.setOnClickListener(this);
+        ficha3N = findViewById(R.id.ficha3N);
+        ficha3N.setOnClickListener(this);
+        ficha4N = findViewById(R.id.ficha4N);
+        ficha4N.setOnClickListener(this);
+        ficha5N = findViewById(R.id.ficha5N);
+        ficha5N.setOnClickListener(this);
+        ficha6N = findViewById(R.id.ficha6N);
+        ficha6N.setOnClickListener(this);
+        ficha7N = findViewById(R.id.ficha7N);
+        ficha7N.setOnClickListener(this);
 
-        ficha1B = findViewById(R.id.ficha1B); ficha1B.setOnClickListener(this);
-        ficha2B = findViewById(R.id.ficha2B); ficha2B.setOnClickListener(this);
-        ficha3B = findViewById(R.id.ficha3B); ficha3B.setOnClickListener(this);
-        ficha4B = findViewById(R.id.ficha4B); ficha4B.setOnClickListener(this);
-        ficha5B = findViewById(R.id.ficha5B); ficha5B.setOnClickListener(this);
-        ficha6B = findViewById(R.id.ficha6B); ficha6B.setOnClickListener(this);
-        ficha7B = findViewById(R.id.ficha7B); ficha7B.setOnClickListener(this);
+        ficha1B = findViewById(R.id.ficha1B);
+        ficha1B.setOnClickListener(this);
+        ficha2B = findViewById(R.id.ficha2B);
+        ficha2B.setOnClickListener(this);
+        ficha3B = findViewById(R.id.ficha3B);
+        ficha3B.setOnClickListener(this);
+        ficha4B = findViewById(R.id.ficha4B);
+        ficha4B.setOnClickListener(this);
+        ficha5B = findViewById(R.id.ficha5B);
+        ficha5B.setOnClickListener(this);
+        ficha6B = findViewById(R.id.ficha6B);
+        ficha6B.setOnClickListener(this);
+        ficha7B = findViewById(R.id.ficha7B);
+        ficha7B.setOnClickListener(this);
 
         tablero = new Tablero();
         util = new Utilidades();
         jB = new Jugador();
         jN = new Jugador();
-        turno = new Turno(0, false);
+        turno = new Turno(0, true);
         enCasaB = enCasaN = 0;
         tirada = fich = 0;
         dados = ficha = false;
@@ -138,31 +152,28 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
         tablero.setRecorridoBlanco(util.generarRecorrido(1));
         tablero.setRecorridoNegro(util.generarRecorrido(2));
 
-        System.out.println(tablero.getRecorridoBlanco().size());
-
         jB.setColor(true);
         jB.setFichas(util.generarFichas(jB.getColor()));
 
-        selectorFichasBlancas.put(jB.getFichas().get(0),ficha1B);
-        selectorFichasBlancas.put(jB.getFichas().get(1),ficha2B);
-        selectorFichasBlancas.put(jB.getFichas().get(2),ficha3B);
-        selectorFichasBlancas.put(jB.getFichas().get(3),ficha4B);
-        selectorFichasBlancas.put(jB.getFichas().get(4),ficha5B);
-        selectorFichasBlancas.put(jB.getFichas().get(5),ficha6B);
-        selectorFichasBlancas.put(jB.getFichas().get(6),ficha7B);
+        selectorFichasBlancas.put(jB.getFichas().get(0), ficha1B);
+        selectorFichasBlancas.put(jB.getFichas().get(1), ficha2B);
+        selectorFichasBlancas.put(jB.getFichas().get(2), ficha3B);
+        selectorFichasBlancas.put(jB.getFichas().get(3), ficha4B);
+        selectorFichasBlancas.put(jB.getFichas().get(4), ficha5B);
+        selectorFichasBlancas.put(jB.getFichas().get(5), ficha6B);
+        selectorFichasBlancas.put(jB.getFichas().get(6), ficha7B);
 
         jN.setColor(false);
         jN.setFichas(util.generarFichas(jN.getColor()));
 
-        selectorFichasNegras.put(jN.getFichas().get(0),ficha1N);
-        selectorFichasNegras.put(jN.getFichas().get(1),ficha2N);
-        selectorFichasNegras.put(jN.getFichas().get(2),ficha3N);
-        selectorFichasNegras.put(jN.getFichas().get(3),ficha4N);
-        selectorFichasNegras.put(jN.getFichas().get(4),ficha5N);
-        selectorFichasNegras.put(jN.getFichas().get(5),ficha6N);
-        selectorFichasNegras.put(jN.getFichas().get(6),ficha7N);
+        selectorFichasNegras.put(jN.getFichas().get(0), ficha1N);
+        selectorFichasNegras.put(jN.getFichas().get(1), ficha2N);
+        selectorFichasNegras.put(jN.getFichas().get(2), ficha3N);
+        selectorFichasNegras.put(jN.getFichas().get(3), ficha4N);
+        selectorFichasNegras.put(jN.getFichas().get(4), ficha5N);
+        selectorFichasNegras.put(jN.getFichas().get(5), ficha6N);
+        selectorFichasNegras.put(jN.getFichas().get(6), ficha7N);
 
-        System.out.println("Empieza el juego");
         textViewInfoNegro.setText("Empieza el juego");
         textViewInfoBlanco.setText("Empieza el juego");
 
@@ -172,34 +183,29 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
         mp = MediaPlayer.create(this, R.raw.dados);
 
         preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
-        colorFichaKey="colorFichaKey";
-        colorTableroKey="colorTableroKey";
+        colorFichaKey = "colorFichaKey";
+        colorTableroKey = "colorTableroKey";
         sonidoKey = "sonidoKey";
-        verde = ContextCompat.getDrawable(getApplicationContext(),R.drawable.green);
-        rojo = ContextCompat.getDrawable(getApplicationContext(),R.drawable.red);
-        blanco = ContextCompat.getDrawable(getApplicationContext(),R.drawable.white);
-        negro = ContextCompat.getDrawable(getApplicationContext(),R.drawable.black);
 
-        tableroAzul = ContextCompat.getDrawable(getApplicationContext(),R.drawable.board);
-        tableroNegro = ContextCompat.getDrawable(getApplicationContext(),R.drawable.board_black);
-
-       /* if(preferences.getBoolean(colorFichaKey,true)){
-            runOnUiThread(() ->{
-                util.setColorFichas(selectorFichasBlancas,blanco);
-                util.setColorFichas(selectorFichasNegras,negro);
+        if (preferences.getBoolean(colorFichaKey, true)) {
+            runOnUiThread(() -> {
+                util.setColorFichas(selectorFichasBlancas, R.drawable.white, jB);
+                util.setColorFichas(selectorFichasNegras, R.drawable.black, jN);
             });
-        }else{
-            runOnUiThread(() ->{
-                util.setColorFichas(selectorFichasBlancas,verde);
-                util.setColorFichas(selectorFichasNegras,rojo);
+        } else {
+            runOnUiThread(() -> {
+                util.setColorFichas(selectorFichasBlancas, R.drawable.green, jB);
+                util.setColorFichas(selectorFichasNegras, R.drawable.red, jN);
             });
         }
 
-        if(preferences.getBoolean(colorTableroKey,true)){
-            runOnUiThread(() -> tableroView.setBackground(tableroAzul));
-        }else{
-            runOnUiThread(() -> tableroView.setBackground(tableroNegro));
-        }*/
+        if (preferences.getBoolean(colorTableroKey, true)) {
+            runOnUiThread(() -> tableroView.setBackgroundResource(R.drawable.board));
+        } else {
+            runOnUiThread(() -> tableroView.setBackgroundResource(R.drawable.board_black));
+        }
+
+        toast = new Toast(getApplicationContext());
 
         thread.start();
     }
@@ -210,19 +216,16 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
      */
     public Boolean juego(Turno turno) {
 
-            dimensionesTablero[0] = tableroView.getWidth();
-            dimensionesTablero[1] = tableroView.getHeight();
+        dimensionesTablero[0] = tableroView.getWidth();
+        dimensionesTablero[1] = tableroView.getHeight();
 
-            util.setCoordenadasIniciales(jB,selectorFichasBlancas);
-            util.setCoordenadasIniciales(jN,selectorFichasNegras);
+        util.setCoordenadasIniciales(jB, selectorFichasBlancas);
+        util.setCoordenadasIniciales(jN, selectorFichasNegras);
 
-
-        System.out.println("Ancho: " + dimensionesTablero[0]);
-        System.out.println("alto: " + dimensionesTablero[1]);
         Boolean roseta = false;
         dados = false;
         ficha = false;
-        runOnUiThread(() -> texto(turno.getColor(), "Te toca Crack " + "Tira los dados"));
+        runOnUiThread(() -> texto(turno.getColor(), "Te toca Crack"));
         do {
             try {
                 thread.sleep(50);
@@ -236,31 +239,63 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
         tirada = this.util.tirarDados();
 
         if (tirada == 0) {
-            runOnUiThread(() -> texto(turno.getColor(), "Pierdes turno pringao :P"));
+            runOnUiThread(() -> {
+                texto(turno.getColor(), tirada.toString());
+                if (turno.getColor()) {
+                    inflater = getLayoutInflater();
+                    layout = inflater.inflate(R.layout.toast_layout, (ViewGroup) findViewById(R.id.toast_layout_root));
+                    //Configure message
+                    txt = (TextView) layout.findViewById(R.id.toast_msg);
+                    toast.setMargin(0, 0);
+                } else {
+                    inflater = getLayoutInflater();
+                    layout = inflater.inflate(R.layout.toast_layout_reverse, (ViewGroup) findViewById(R.id.toast_layout_root_reverse));
+                    //Configure message
+                    txt = (TextView) layout.findViewById(R.id.toast_msg_reverse);
+                    toast.setMargin(0, 0.73f);
+                }
+                txt.setText("¡Pierdes turno pringao!");
+                //Configure toast and display
+                toast.setDuration(Toast.LENGTH_SHORT);
+                toast.setView(layout);
+                toast.show();
+            });
+
             try {
                 thread.sleep(2500);
             } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-        } else{
-
+                e.printStackTrace();
+            }
+        } else {
+            /**si turno color == true Blanco*/
             if (turno.getColor()) {
-                if(  (!util.evaluarDestino(jB, tablero.getRecorridoBlanco(), tablero.getRecorridoNegro(), tirada, 1) &&
+                if ((!util.evaluarDestino(jB, tablero.getRecorridoBlanco(), tablero.getRecorridoNegro(), tirada, 1) &&
                         !util.evaluarDestino(jB, tablero.getRecorridoBlanco(), tablero.getRecorridoNegro(), tirada, 2) &&
                         !util.evaluarDestino(jB, tablero.getRecorridoBlanco(), tablero.getRecorridoNegro(), tirada, 3) &&
                         !util.evaluarDestino(jB, tablero.getRecorridoBlanco(), tablero.getRecorridoNegro(), tirada, 4) &&
                         !util.evaluarDestino(jB, tablero.getRecorridoBlanco(), tablero.getRecorridoNegro(), tirada, 5) &&
                         !util.evaluarDestino(jB, tablero.getRecorridoBlanco(), tablero.getRecorridoNegro(), tirada, 6) &&
                         !util.evaluarDestino(jB, tablero.getRecorridoBlanco(), tablero.getRecorridoNegro(), tirada, 7))) {
-                    runOnUiThread(() -> texto(turno.getColor(), "No puedes mover ninguna ficha, :P"));
+                    runOnUiThread(() -> {
+                        inflater = getLayoutInflater();
+                        layout = inflater.inflate(R.layout.toast_layout, (ViewGroup) findViewById(R.id.toast_layout_root));
+                        //Configure message
+                        txt = (TextView) layout.findViewById(R.id.toast_msg);
+                        toast.setMargin(0, 0);
+                        txt.setText("¡No puedes mover, pierdes turno!");
+                        //Configure toast and display
+                        toast.setDuration(Toast.LENGTH_SHORT);
+                        toast.setView(layout);
+                        toast.show();
+                    });
                     try {
                         thread.sleep(2500);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                }else {
+                } else {
                     do {
-                        runOnUiThread(() -> texto(turno.getColor(), "Te ha salido un " + tirada + " Elige una ficha"));
+                        runOnUiThread(() -> texto(turno.getColor(), tirada.toString()));
                         do {
                             try {
                                 thread.sleep(50);
@@ -273,7 +308,15 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
                         ficha = false;
                         if (!util.ocupantes) {
                             runOnUiThread(() -> {
-                                toast = Toast.makeText(getApplicationContext(), "¡Destino ocupado!", Toast.LENGTH_SHORT);
+                                inflater = getLayoutInflater();
+                                layout = inflater.inflate(R.layout.toast_layout, (ViewGroup) findViewById(R.id.toast_layout_root));
+                                //Configure message
+                                txt = (TextView) layout.findViewById(R.id.toast_msg);
+                                toast.setMargin(0, 0);
+                                txt.setText("¡Destino ocupado!");
+                                //Configure toast and display
+                                toast.setDuration(Toast.LENGTH_SHORT);
+                                toast.setView(layout);
                                 toast.show();
                             });
                         }
@@ -282,28 +325,41 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
 
                     roseta = util.moverFicha(jB, jN, fich - 1, tirada, tablero.getRecorridoBlanco(),
                             tablero.getRecorridoNegro());
-                    /** Accion de comer sobre negras*/
-                    if(jB.getFichas().get(fich - 1).getPosicion()>14){
+                    /**Llegada a casa*/
+                    if (jB.getFichas().get(fich - 1).getPosicion() > 14) {
                         runOnUiThread(() -> {
                             util.posicionarFicha(fichaMover, dimensionesTablero,
-                                    jB.getFichas().get(fich - 1),
-                                    5,
-                                    2 );
+                                    jB.getFichas().get(fich - 1), 5, 2);
                             fichaMover.setVisibility(View.GONE);
                         });
-                    }else{
+                    } else {
+                        /** Accion de comer sobre negras*/
                         if (util.comida) {
-                        runOnUiThread(() -> util.posicionarFicha(selectorFichasNegras.get(util.fichaComida), dimensionesTablero,
-                                util.fichaComida,
-                                casaNegro[0],
-                                casaNegro[1]));
-                    }
+                            runOnUiThread(() -> {
+                                util.posicionarFicha(selectorFichasNegras.get(util.fichaComida), dimensionesTablero,
+                                        util.fichaComida,
+                                        casaNegro[0],
+                                        casaNegro[1]);
+
+                                inflater = getLayoutInflater();
+                                layout = inflater.inflate(R.layout.toast_layout_reverse, (ViewGroup) findViewById(R.id.toast_layout_root_reverse));
+                                //Configure message
+                                txt = (TextView) layout.findViewById(R.id.toast_msg_reverse);
+                                toast.setMargin(0, 0.73f);
+                                txt.setText("¡Pa Casa!");
+                                //Configure toast and display
+                                toast.setDuration(Toast.LENGTH_SHORT);
+                                toast.setView(layout);
+                                toast.show();
+                            });
+                        }
                         runOnUiThread(() -> util.posicionarFicha(fichaMover, dimensionesTablero,
                                 jB.getFichas().get(fich - 1),
                                 tablero.getRecorridoBlanco().get(jB.getFichas().get(fich - 1).getPosicion()).getCoordenadas()[0],
                                 tablero.getRecorridoBlanco().get(jB.getFichas().get(fich - 1).getPosicion()).getCoordenadas()[1]));
                     }
                 }
+                /**si turno color == false Negro*/
             } else {
                 if ((!util.evaluarDestino(jN, tablero.getRecorridoNegro(), tablero.getRecorridoBlanco(), tirada, 1) &&
                         !util.evaluarDestino(jN, tablero.getRecorridoNegro(), tablero.getRecorridoBlanco(), tirada, 2) &&
@@ -312,7 +368,20 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
                         !util.evaluarDestino(jN, tablero.getRecorridoNegro(), tablero.getRecorridoBlanco(), tirada, 5) &&
                         !util.evaluarDestino(jN, tablero.getRecorridoNegro(), tablero.getRecorridoBlanco(), tirada, 6) &&
                         !util.evaluarDestino(jN, tablero.getRecorridoNegro(), tablero.getRecorridoBlanco(), tirada, 7))) {
-                    runOnUiThread(() -> texto(turno.getColor(), "No puedes mover ninguna ficha, :P"));
+                    runOnUiThread(() -> {
+                        texto(turno.getColor(), tirada.toString());
+
+                        inflater = getLayoutInflater();
+                        layout = inflater.inflate(R.layout.toast_layout_reverse, (ViewGroup) findViewById(R.id.toast_layout_root_reverse));
+                        //Configure message
+                        txt = (TextView) layout.findViewById(R.id.toast_msg_reverse);
+                        toast.setMargin(0, 0.73f);
+                        txt.setText("¡No puedes mover, pierdes turno!");
+                        //Configure toast and display
+                        toast.setDuration(Toast.LENGTH_SHORT);
+                        toast.setView(layout);
+                        toast.show();
+                    });
                     try {
                         thread.sleep(2500);
                     } catch (InterruptedException e) {
@@ -320,7 +389,7 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
                     }
                 } else {
                     do {
-                        runOnUiThread(() -> texto(turno.getColor(), "Te ha salido un " + tirada + " Elige una ficha"));
+                        runOnUiThread(() -> texto(turno.getColor(), tirada.toString()));
                         do {
                             try {
                                 thread.sleep(50);
@@ -333,7 +402,15 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
                         ficha = false;
                         if (!util.ocupantes) {
                             runOnUiThread(() -> {
-                                toast = Toast.makeText(getApplicationContext(), "¡Destino ocupado!", Toast.LENGTH_SHORT);
+                                inflater = getLayoutInflater();
+                                layout = inflater.inflate(R.layout.toast_layout_reverse, (ViewGroup) findViewById(R.id.toast_layout_root_reverse));
+                                //Configure message
+                                txt = (TextView) layout.findViewById(R.id.toast_msg_reverse);
+                                toast.setMargin(0, 0.73f);
+                                txt.setText("¡Destino Ocupado!");
+                                //Configure toast and display
+                                toast.setDuration(Toast.LENGTH_SHORT);
+                                toast.setView(layout);
                                 toast.show();
                             });
                         }
@@ -341,32 +418,42 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
                             fich));
                     roseta = util.moverFicha(jN, jB, fich - 1, tirada, tablero.getRecorridoNegro(),
                             tablero.getRecorridoBlanco());
-                    /** Accion de comer sobre blancas*/
-                    if(jN.getFichas().get(fich - 1).getPosicion()>14){
+                    /**Llegada a casa*/
+                    if (jN.getFichas().get(fich - 1).getPosicion() > 14) {
                         runOnUiThread(() -> {
                             util.posicionarFicha(fichaMover, dimensionesTablero,
-                                    jB.getFichas().get(fich - 1),
-                                    5,
-                                    0 );
-
+                                    jB.getFichas().get(fich - 1), 4, 0);
                             fichaMover.setVisibility(View.GONE);
                         });
-                    }else{
+                    } else {
+                        /** Accion de comer sobre blancas*/
                         if (util.comida) {
-                        runOnUiThread(() -> util.posicionarFicha(selectorFichasBlancas.get(util.fichaComida), dimensionesTablero,
-                                util.fichaComida,
-                                casaBlanco[0],
-                                casaBlanco[1]));
-                    }
-                    runOnUiThread(() -> util.posicionarFicha(fichaMover, dimensionesTablero,
-                            jN.getFichas().get(fich - 1),
-                            tablero.getRecorridoNegro().get(jN.getFichas().get(fich - 1).getPosicion()).getCoordenadas()[0],
-                            tablero.getRecorridoNegro().get(jN.getFichas().get(fich - 1).getPosicion()).getCoordenadas()[1]));
+                            runOnUiThread(() -> {
+                                util.posicionarFicha(selectorFichasBlancas.get(util.fichaComida), dimensionesTablero,
+                                        util.fichaComida,
+                                        casaBlanco[0],
+                                        casaBlanco[1]);
+                                inflater = getLayoutInflater();
+                                layout = inflater.inflate(R.layout.toast_layout, (ViewGroup) findViewById(R.id.toast_layout_root));
+                                //Configure message
+                                txt = (TextView) layout.findViewById(R.id.toast_msg);
+                                toast.setMargin(0, 0);
+                                txt.setText("¡Pa Casa!");
+                                //Configure toast and display
+                                toast.setDuration(Toast.LENGTH_SHORT);
+                                toast.setView(layout);
+                                toast.show();
+                            });
+                        }
+                        runOnUiThread(() -> util.posicionarFicha(fichaMover, dimensionesTablero,
+                                jN.getFichas().get(fich - 1),
+                                tablero.getRecorridoNegro().get(jN.getFichas().get(fich - 1).getPosicion()).getCoordenadas()[0],
+                                tablero.getRecorridoNegro().get(jN.getFichas().get(fich - 1).getPosicion()).getCoordenadas()[1]));
                     }
                 }
                 runOnUiThread(() -> {
-                    textViewFichasBlanco.setText("En casa " + enCasaB);
-                    textViewFichasNegro.setText("En casa " + enCasaN);
+                    textViewFichasBlanco.setText("En casa: " + enCasaB);
+                    textViewFichasNegro.setText("En casa: " + enCasaN);
                 });
             }
         }
@@ -378,14 +465,13 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
 
     public void texto(boolean color, String str) {
         if (color) {
-            textViewInfoNegro.setText("A ti no te toca :(");
+            textViewInfoNegro.setText(":(");
             textViewInfoBlanco.setText(str);
         } else {
-            textViewInfoBlanco.setText("A ti no te toca :(");
+            textViewInfoBlanco.setText(":(");
             textViewInfoNegro.setText(str);
         }
     }
-
 
     @Override
     public void onClick(View v) {
@@ -396,11 +482,6 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
                 if (!turno.getColor()) {
                     tirada = this.util.tirarDados();
                     dados = true;
-                    if(mp.isPlaying()){
-                        mp.stop();
-                    }
-                    mp = MediaPlayer.create(this, R.raw.dados);
-                    mp.start();
                 } else
                     dados = false;
                 break;
@@ -409,11 +490,6 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
                 if (turno.getColor()) {
                     tirada = this.util.tirarDados();
                     dados = true;
-                    if(mp.isPlaying()){
-                        mp.stop();
-                    }
-                    mp = MediaPlayer.create(this, R.raw.dados);
-                    mp.start();
                 } else
                     dados = false;
                 break;
@@ -526,13 +602,13 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
                 builder.setTitle("MENÚ DE PAUSA");
                 final View inflator = inflater.inflate(R.layout.menu_pausa, null);
                 builder.setView(inflator)
-                        .setNegativeButton("Volver al juego",new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
-                AlertDialog dialog =  builder.create();
+                        .setNegativeButton("Volver al juego", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        });
+                AlertDialog dialog = builder.create();
                 Button menu = inflator.findViewById(R.id.menuPrincipal);
                 menu.setOnClickListener(this::onClick);
                 Button salir = inflator.findViewById(R.id.salirDelJuego);
@@ -544,50 +620,50 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
             case (R.id.menuPrincipal):
                 Intent menuPrincipal = new Intent(JuegoActivity.this, MenuPrincipal.class);
                 startActivity(menuPrincipal);
-                    break;
+                break;
             case (R.id.salirDelJuego):
                 this.finishAffinity();
                 break;
 
             case (R.id.menuPreferencias):
-                //dialog.dismiss();
+                Intent menuPreferencias = new Intent(JuegoActivity.this, PreferenciasActivity.class);
+                startActivity(menuPreferencias);
                 break;
 
         }
-        if(dados) {
-            if(mp.isPlaying()){
+        if (dados && preferences.getBoolean(sonidoKey, true)) {
+            if (mp.isPlaying()) {
                 mp.stop();
             }
             mp = MediaPlayer.create(this, R.raw.dados);
             mp.start();
-        }else if(ficha){
-            if(mp.isPlaying()){
+        } else if (ficha && preferences.getBoolean(sonidoKey, true)) {
+            if (mp.isPlaying()) {
                 mp.stop();
             }
             mp = MediaPlayer.create(this, R.raw.ficha);
             mp.start();
-
         }
     }
 
     class ThreadJuego extends Thread {
         @Override
         public void run() {
-            util.colocarFichasInicio(jB,selectorFichasBlancas,dimensionesTablero,casaBlanco);
-            util.colocarFichasInicio(jN,selectorFichasNegras,dimensionesTablero,casaNegro);
+            util.colocarFichasInicio(jB, selectorFichasBlancas, dimensionesTablero, casaBlanco);
+            util.colocarFichasInicio(jN, selectorFichasNegras, dimensionesTablero, casaNegro);
             while (enCasaB != 7 && enCasaN != 7) {
                 runOnUiThread(() -> {
-                    textViewFichasNegro.setText("Negras en casa " + enCasaN);
-                    textViewFichasBlanco.setText("Blancas en casa " + enCasaB);
+                    textViewFichasNegro.setText("En casa " + enCasaN);
+                    textViewFichasBlanco.setText("En casa " + enCasaB);
                 });
                 if (!juego(turno)) {
                     turno.setColor(!turno.getColor());
-                    util.comida=false;
+                    util.comida = false;
                     contadorTurnos++;
-                }else{
+                } else {
                     runOnUiThread(() -> {
-                            toast = Toast.makeText(getApplicationContext(),"Turno Extra", Toast.LENGTH_SHORT);
-                            toast.show();
+                        toast = Toast.makeText(getApplicationContext(), "Turno Extra", Toast.LENGTH_SHORT);
+                        toast.show();
                     });
                 }
                 enCasaB = 0;
@@ -602,10 +678,10 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
 
             }
             runOnUiThread(() -> {
-                if(enCasaB==7){
+                if (enCasaB == 7) {
                     textViewInfoBlanco.setText("¡Victoria!");
                     textViewInfoNegro.setText("Derrota :(");
-                }else{
+                } else {
                     textViewInfoNegro.setText("¡Victoria!");
                     textViewInfoBlanco.setText("Derrota :(");
                 }
@@ -624,21 +700,21 @@ public class JuegoActivity extends AppCompatActivity implements View.OnClickList
                 // Inflate and set the layout for the dialog
                 // Pass null as the parent view because its going in the dialog layout
                 builder.setView(inflator)
-                        .setPositiveButton("Añadir",new DialogInterface.OnClickListener() {
+                        .setPositiveButton("Añadir", new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
 
-                                bd.insertarPartida(jugador1.getText().toString(), jugador2.getText().toString(),Integer.parseInt(turnos.getText().toString()));
+                                bd.insertarPartida(jugador1.getText().toString(), jugador2.getText().toString(), Integer.parseInt(turnos.getText().toString()));
                             }
                         })
-                        .setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.dismiss();
                             }
                         });
-                AlertDialog dialog =  builder.create();
+                AlertDialog dialog = builder.create();
                 dialog.show();
             });
         }

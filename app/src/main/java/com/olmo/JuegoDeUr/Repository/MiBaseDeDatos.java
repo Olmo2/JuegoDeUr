@@ -38,18 +38,18 @@ public class MiBaseDeDatos extends SQLiteOpenHelper {
         onCreate(bd);
     }
 
-    public void insertarPartida(String nombre,String contenido,Integer turnos){
+    public void insertarPartida(String ganador,String perdedor,Integer turnos){
         ContentValues cv = new ContentValues();
-        cv.put(ContratoJuego.Partidas.COLUMNA2, nombre);
-        cv.put(ContratoJuego.Partidas.COLUMNA3, contenido);
+        cv.put(ContratoJuego.Partidas.COLUMNA2, ganador);
+        cv.put(ContratoJuego.Partidas.COLUMNA3, perdedor);
         cv.put(ContratoJuego.Partidas.COLUMNA4, turnos);
         bd.insert(ContratoJuego.Partidas.TABLA1, null, cv);
     }
 
-    public void actualizarPartida(int id, String nombre, String contenido,Integer turnos){
+    public void actualizarPartida(int id, String ganador, String perdedor,Integer turnos){
         ContentValues cv = new ContentValues();
-        cv.put(ContratoJuego.Partidas.COLUMNA2, nombre);
-        cv.put(ContratoJuego.Partidas.COLUMNA3, contenido);
+        cv.put(ContratoJuego.Partidas.COLUMNA2, ganador);
+        cv.put(ContratoJuego.Partidas.COLUMNA3, perdedor);
         cv.put(ContratoJuego.Partidas.COLUMNA4, turnos);
         bd.update(ContratoJuego.Partidas.TABLA1, cv, ContratoJuego.Partidas.COLUMNA1 + " = " + id,null);
     }

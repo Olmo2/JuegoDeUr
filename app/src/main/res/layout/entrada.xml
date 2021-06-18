@@ -25,7 +25,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Nota"
-                android:textColor="#C51162"
+                android:textColor="@color/white"
                 android:textSize="24sp" />
 
             <TextView
@@ -35,7 +35,7 @@
                 android:layout_weight="0.5"
                 android:gravity="center"
                 android:text="@string/vs"
-                android:textColor="#C51162"
+                android:textColor="@color/white"
                 android:textSize="24sp" />
 
             <TextView
@@ -45,7 +45,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Nota"
-                android:textColor="#C51162"
+                android:textColor="@color/white"
                 android:textSize="24sp" />
 
         </LinearLayout>

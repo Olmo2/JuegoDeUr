@@ -11,7 +11,7 @@
 [![Size][size-shield]][size-url]
 [![Issues][issues-shield]][issues-url]
 [![LinkedIn][linkedin-shield]](https://www.linkedin.com/in/olmo-tamargo-suárez-ba0864ab)
-[![release-shield]][relesae-url]
+[![release-shield]][release-url]
 
 <!-- PROJECT LOGO -->
 <br />
@@ -51,6 +51,6 @@ dando una vida más a esta maravilla de juego que data del año 3000 A.C.
 [issues-shield]: https://img.shields.io/github/issues/olmo2/JuegoDeUr?style=for-the-badge
 [issues-url]: https://github.com/olmo2/JuegoDeUr/issues
 [release-shield]: https://img.shields.io/github/v/tag/olmo2/JuegoDeUr?style=for-the-badge
-[relesae-url]: https://github.com/olmo2/v/tag/JuegoDeUr
+[release-url]: https://github.com/Olmo2/JuegoDeUr/releases/tag/v.1.0
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/github_username

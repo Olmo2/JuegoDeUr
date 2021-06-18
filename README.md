@@ -6,12 +6,12 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
+
 [![Last Commit][LastCommit-shield]][LastCommit-url]
 [![Size][size-shield]][size-url]
 [![Issues][issues-shield]][issues-url]
 [![LinkedIn][linkedin-shield]](https://www.linkedin.com/in/olmo-tamargo-suárez-ba0864ab)
-
-
+[![release-shield]][relesae-url]
 
 <!-- PROJECT LOGO -->
 <br />
@@ -50,7 +50,7 @@ dando una vida más a esta maravilla de juego que data del año 3000 A.C.
 [stars-url]: https://github.com/github_username/repo/stargazers
 [issues-shield]: https://img.shields.io/github/issues/olmo2/JuegoDeUr?style=for-the-badge
 [issues-url]: https://github.com/olmo2/JuegoDeUr/issues
-[license-shield]: https://img.shields.io/github/issues/olmo2/JuegoDeUr?style=for-the-badge
-[license-url]: https://github.com/github_username/repo/blob/master/LICENSE.txt
+[release-shield]: https://img.shields.io/github/v/tag/olmo2/JuegoDeUr?style=for-the-badge
+[relesae-url]: https://github.com/olmo2/v/tag/JuegoDeUr
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/github_username

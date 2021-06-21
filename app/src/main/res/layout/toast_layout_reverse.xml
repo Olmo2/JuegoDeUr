@@ -12,6 +12,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:rotation="180"
-        android:textColor="#FFF"
-        android:textSize="20sp" />
+        android:textColor="#FFF"/>
 </LinearLayout>
